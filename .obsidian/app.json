@@ -1,0 +1,10 @@
+{
+  "promptDelete": false,
+  "alwaysUpdateLinks": true,
+  "newLinkFormat": "absolute",
+  "userIgnoreFilters": [
+    "outputs/",
+    "archives/",
+    ".claude/"
+  ]
+}

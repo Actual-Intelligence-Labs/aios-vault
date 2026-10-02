@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Document</title>
+
+<!-- 1. Link the design system (render.py copies base.css next to this file). -->
+<link rel="stylesheet" href="base.css">
+
+<!-- 2. THEME THIS DOC from brand/brand.md. Colors re-color everything; the two
+        font lines swap the typefaces. Delete a line to keep the shipped default.
+        If the brand fonts are Google Fonts, add their <link> above this block.
+        Leave the <img class="logo"> out if there is no logo file. -->
+<style>
+  :root{
+    --accent: #1f5fdb;   /* <- accent hex from brand/brand.md */
+    /* --ink: #16202e; */
+    /* --font-heading: "Your Heading Font", Georgia, serif; */
+    /* --font-body: "Your Body Font", -apple-system, Arial, sans-serif; */
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ========= COVER =========
+     Default professional cover (rule under the title). For a bolder look,
+     wrap this block's contents in <header class="masthead"> instead of <header class="cover">. -->
+<header class="cover">
+  <!-- optional logo: <img class="logo" src="file:///absolute/path/logo.png" alt="Logo"> -->
+  <div class="eyebrow">Proposal</div>
+  <h1>Document title goes here</h1>
+  <p class="subtitle">One line on what this document is and who it is for.</p>
+  <div class="meta">
+    <div class="item"><span class="label">Prepared for</span><span class="value">{{PREPARED_FOR}}</span></div>
+    <div class="item"><span class="label">Date</span><span class="value">{{DATE}}</span></div>
+    <div class="item"><span class="label">From</span><span class="value">{{YOUR_BUSINESS_NAME}}</span></div>
+  </div>
+</header>
+
+<!-- ========= LEAD / OVERVIEW ========= -->
+<section>
+  <p class="lead">An opening paragraph, set slightly larger. It says what this document is about, written in the owner's voice.</p>
+</section>
+
+<!-- ========= SECTION with body + list ========= -->
+<section>
+  <h2>A section heading that says something</h2>
+  <p>Body copy. How long paragraphs run, and whether points are a list or prose, comes from the owner's voice and taste files.</p>
+  <ul>
+    <li>A list item, when the content is a list.</li>
+    <li>A second item.</li>
+    <li>A third item.</li>
+  </ul>
+</section>
+
+<!-- ========= CALLOUT (key takeaway) ========= -->
+<div class="callout">
+  <div class="eyebrow">Worth noting</div>
+  <p>A callout holds a point the reader should not miss.</p>
+</div>
+
+<!-- ========= STAT / FEATURE GRID ========= -->
+<section>
+  <h2>At a glance</h2>
+  <div class="grid-3">
+    <div class="card stat"><div class="num">12</div><div class="label">A number from the source</div></div>
+    <div class="card stat"><div class="num">4 weeks</div><div class="label">Another figure worth seeing</div></div>
+    <div class="card stat"><div class="num">2</div><div class="label">A third, if there is one</div></div>
+  </div>
+  <div class="grid-2">
+    <div class="card"><h3>First option</h3><p>A short description of the first item in a pair.</p></div>
+    <div class="card"><h3>Second option</h3><p>A short description of the second item, written the same way.</p></div>
+  </div>
+</section>
+
+<!-- ========= SCOPE / PRICING TABLE ========= -->
+<section>
+  <h2>Scope and price</h2>
+  <table>
+    <thead><tr><th>Item</th><th>What is included</th><th>Price</th></tr></thead>
+    <tbody>
+      <tr><td>First item</td><td>A short description</td><td>$X,XXX</td></tr>
+      <tr><td>Second item</td><td>A short description</td><td>$X,XXX</td></tr>
+      <tr class="total"><td>Total</td><td></td><td>$XX,XXX</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ========= NEXT STEPS ========= -->
+<section>
+  <h2>Next steps</h2>
+  <ol>
+    <li>The first thing that happens next, and who does it.</li>
+    <li>The second.</li>
+    <li>The third.</li>
+  </ol>
+</section>
+
+<!-- ========= FOOTER (in-flow; lands at the bottom of a full page) ========= -->
+<footer class="footer">
+  <span class="brand">{{YOUR_BUSINESS_NAME}}</span>
+  <span>{{YOUR_WEBSITE}}</span>
+</footer>
+
+</body>
+</html>

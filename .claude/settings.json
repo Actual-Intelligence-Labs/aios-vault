@@ -1,0 +1,68 @@
+{
+  "extraKnownMarketplaces": {
+    "sheet-geek": {
+      "source": {
+        "source": "github",
+        "repo": "Actual-Intelligence-Labs/sheet-geek",
+        "ref": "release"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "sheet-geek@sheet-geek": true
+  },
+  "skillOverrides": {
+    "schedule": "user-invocable-only",
+    "loop": "user-invocable-only"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/run.sh\" session_pulse.py",
+            "timeout": 10,
+            "statusMessage": "Catching up on your vault"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/run.sh\" auto_capture.py",
+            "timeout": 10,
+            "statusMessage": "Checking for a loose thought to file"
+          },
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/run.sh\" brand_guard.py",
+            "timeout": 10,
+            "statusMessage": "Loading your brand and voice"
+          },
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/run.sh\" vault_recall.py",
+            "timeout": 10,
+            "statusMessage": "Looking up names in your vault"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/run.sh\" brain_log.py",
+            "timeout": 15,
+            "statusMessage": "Checking that anything sent got logged"
+          }
+        ]
+      }
+    ]
+  }
+}

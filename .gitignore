@@ -1,0 +1,64 @@
+# ---------------------------------------------------------------------------
+# NEVER COMMIT CREDENTIALS.
+# If one of these ever lands in git history, it is public forever, even after
+# you delete it. Rotate the secret, do not just remove the file.
+# ---------------------------------------------------------------------------
+client_secret_*.json
+*credentials*.json
+*-service-account*.json
+*.pem
+*.key
+*.token
+
+# Environment files. These hold API keys and connection strings.
+.env
+.env.local
+.env.*.local
+
+# ---------------------------------------------------------------------------
+# Generated output. Rebuildable, often large, and specific to your machine.
+# Keep the folder itself so the path always exists; ignore what lands in it.
+# ---------------------------------------------------------------------------
+outputs/*
+!outputs/.gitkeep
+
+# ---------------------------------------------------------------------------
+# Per-machine UI state. These change every time you scroll or resize a pane,
+# so committing them means constant meaningless diffs. Every other .obsidian
+# file IS committed on purpose, so the vault opens configured for everyone.
+# ---------------------------------------------------------------------------
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/graph.json
+
+# Obsidian scratch files created by an accidental click.
+Untitled*.canvas
+Untitled.md
+
+# ---------------------------------------------------------------------------
+# Local machine settings. Your personal Claude Code overrides and permissions
+# belong to you, not to everyone who clones this. Setup also writes where
+# Claude's memory lives into this file, as a path that only fits your computer.
+# ---------------------------------------------------------------------------
+.claude/settings.local.json
+
+# ---------------------------------------------------------------------------
+# A one-time note one session leaves for the next when work stops half done.
+# The next session reads it and deletes it. Never worth keeping.
+# ---------------------------------------------------------------------------
+HANDOFF.md
+
+# ---------------------------------------------------------------------------
+# Operating system and editor junk.
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+*.swp
+
+# ---------------------------------------------------------------------------
+# Logs and build artifacts. Noise, never source.
+# ---------------------------------------------------------------------------
+*.log
+__pycache__/
+*.pyc
+node_modules/

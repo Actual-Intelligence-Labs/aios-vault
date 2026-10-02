@@ -1,0 +1,87 @@
+{
+ "_what_this_is": "Fingerprints (SHA-256 hashes) of earlier versions of this template, so update-vault can tell a file the owner never touched from one they changed, without needing the template's history. A hash holds no text. Line endings are ignored when hashing.",
+ "_when_releasing": "Before releasing a new version, add the previous release as a new entry: run 'python match_known.py record <a clean copy of the previous release> <its label>' and paste the printed object into versions. Never remove an entry.",
+ "versions": [
+  {
+   "claude_sections": {
+    "(top)": "bf01bf970f481b3e1dce2f3fcb0882e96c4d33bb1d763c37e91d57d60536d4a9",
+    "Connections": "8f384d781d7fd42a09358f94b36753e64e648da9621e32b0a19683de9d75275a",
+    "How to work with me": "68cb56b9a8b5d13e5272e3e4b852686fc0b105c1360712b957779d156c74a87d",
+    "Placeholders mean \"not known yet\"": "03b5cce18474891f8194923261354ecc115ed1557ce4fcb91814992204363364",
+    "Read the source before you state a fact": "6a98dfe38c8951f5fc137a8f528928a72d07163f3c63133b5b3c316d40f6a40d",
+    "Safety rules that never bend": "87b66046d9abe1f2adae90df8d7f1b1ef14ff53265bc5f9d4d2ef0f46f85cab8",
+    "Standing behaviors (no command needed)": "4a01af036ca480b322e2bca75144b0ee76f5d31b672dc2382355c6f54d982cbb",
+    "Voice": "d6e617c102f801397b81172ec536f35dfea6161bd864209c647b378d60b4eceb",
+    "What the business does": "93113f40ce3ae2ad5cee9191293f57500a7a78dc0bd0c15838c0e0927963ac4d",
+    "Where things live": "7693f30001449bedd7776c26f8b4642f1a3b9346e3f2a7addb071589c2cdc5d5",
+    "Who I am": "60b0edb90fa1165638c80b0b4f2b0381bfca29efa3189b322e7b423cb198ff2c"
+   },
+   "files": {
+    ".claude/hooks/auto-capture.sh": "f885eec7c93a0c5fe154f9bb6579589d8338e70196b2ecbb28c89509319b8481",
+    ".claude/hooks/brand-guard.sh": "c514f38803c2e85ad6b5c9139498d1945b28f164dff926545b249048af14165b",
+    ".claude/settings.json": "bee45093532e15d29a2dadddd2f75161ef6e4f36b3b374db35799fec5ef49517",
+    ".claude/skills/audit/SKILL.md": "fae6621c39d7d7318860b75d1568f907c3d5cf1e4aa140f54fc0973d10881716",
+    ".claude/skills/capture/SKILL.md": "e95ddcf21bec153a3ce593b841460d04c54b6230f853c914c1b9b1d46c622435",
+    ".claude/skills/level-up/SKILL.md": "07317f1c00aabad41ac5b091a8c27ce2cd2471caff882f20a303bf082cdf20c7",
+    ".claude/skills/meeting-notes/SKILL.md": "959715d233bfebf73db4d616cc1819af1da504b496a3c4d6c78fd1c061d00da1",
+    ".claude/skills/meeting-notes/extract_notes.py": "ded98abf281c59073fceb5656571d2ee2d9a9ae55c074f1c8ec648acacd44904",
+    ".claude/skills/new-node/SKILL.md": "bcea3fc444b0f27bb52fdcfc4edc8dcbde207b0c082804eccc3285a0acd62e90",
+    ".claude/skills/new-skill/SKILL.md": "d8456fbb5e4166b720280255bc66bbed06f06778b78d0e674547d45b2e86efbe",
+    ".claude/skills/onboard/SKILL.md": "5e990f32a65491e10cecbe405f41e4c1defa330ee2b898d625cf87338df2d308",
+    ".claude/skills/pdf/SKILL.md": "af1156cbc711bdb1461027501fe3903079d5a44ee8df721a417b6cd297c47f9f",
+    ".claude/skills/pdf/assets/base.css": "06190993c8d50d1696957a63e2e15bbbca589de80ee830aa0025de1ac3d5767d",
+    ".claude/skills/pdf/assets/template.html": "903c7df95cd75d349dafdcb65deb9004e6b1c00d2978acaf4200f171de8a999e",
+    ".claude/skills/pdf/render.py": "f86499b5c69e54e82f8fba5f3c278de6a11a0fce9345bcfc2c374353bba0f4c3",
+    ".gitignore": "171311673a855a5d14bfbd0fd0e8b0f162063072c84045f28f88c2e1aa2a1530",
+    ".obsidian/app.json": "a2a2fdb6b278234253416a949a0f7e5cad8ffb5e04133591ace1427ff993412e",
+    ".obsidian/appearance.json": "dcff1175b33d58435e26192dd1dae698d15b4d6f003b73383c2b91feb7843ea2",
+    ".obsidian/core-plugins.json": "763cf20a921fd9955735b278006820b90b207b2fc04d9e79ca648279c7c14276",
+    "CLAUDE.md": "9dbe294e41d1d455aba069306aee8d997da734aa27480d936e4ffff4452e86d5",
+    "HOW-IT-WORKS.md": "496960af201f4b961e9ba530f514066937fdf616c00d12df483eae8aa61607b9",
+    "INSTALL.md": "a153e07ad3ff5989a930731c2e9f92727034de7fd048c2e8eae01cc1d7f71277",
+    "LICENSE": "7627bd21d2742b393b38368154896ecd8e56f5c64257b358e3882be723057376",
+    "README.md": "ada59d318edc16d0a758c6b836722df2b4469189a50aa04b12c77eff419da2ad",
+    "brand/README.md": "3a1a477c1e936d5c9ed93a0eb82bb814c5a5272b80e51fbe28ea3fb291c0a7c8",
+    "brand/brand.md": "88474111608e41851c9a87fa8bf77c8cc282e2aee8b9b1250e34336f607bf916",
+    "brand/logos/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "connections.md": "2a28ba0d52c440f8e9bb1dcf1fad07345479bde6f6d1aa30a165f77edb0cbd3d",
+    "context/about-business.md": "0e8c49e9cd2817b094dad770781a7f83ec79b1076106452af22b6d45b0c7dac7",
+    "context/about-me.md": "a419e4de348f394d32455c6e17a4cd46d30116a46d578cd40be02baf446b22e7",
+    "context/contacts.md": "1498e5ccea227fce0d72873c7ecefb3df4cd163b0c4cfe5454836337bc55d3fb",
+    "decisions/log.md": "0c7453819d8ae3daba96139fc991d556e0916a30d7f71cce757b7bf0619f73f7",
+    "ideas.md": "cd819c2c50f917080ee5e5b7094de8ba9f8ca92ca176e0545ed02f60ff96d930",
+    "inbox.md": "fc32ba8a08f9fecb1e715bca3f47263b50aae6440fd7ecf09de1619181119005",
+    "intake.md": "a71f204cc58411f615eb5a222660795d12e8ef6b98889b58e5bf37b366e7ddfe",
+    "memory/taste.md": "5c1f703689b2f66d3ed76c4980e6efafb0592064a35434728b5fea3cb2aa4b81",
+    "playbooks/README.md": "e0375d91429de25cca9d7e4d7a2d3a78326e6eac4cae9ef4736e6e4ee8b16d5b",
+    "playbooks/_TEMPLATE.md": "ae46666959407aeea6e2d265e00082a36af951b4536fbeacdba62cf7727fd7c3",
+    "projects/README.md": "aad1efb0f461305b1c27e5e1332173125a87fb41ce60d17e8c221383911688ea",
+    "projects/_TEMPLATE.md": "a603e1833de0c12d077c404d9d93ef818d1ea90319691bb93fd1f7baac6010b4",
+    "references/README.md": "5e1d9fe3248b0e79ba44ea3c1dcbc4a20c19e88559b7b13911a59084283753ec",
+    "references/how-i-decide.md": "9339de6ec4fee1b43960625454bdd07fee3421004ee73271242ed3f5698f8b10",
+    "references/spoken-voice.md": "23aa71eeb6e07d99c76052ee8c261ba0858b03e322a6cf38ee3cef9879d292d6",
+    "references/voice.md": "68f5d7b78172e463c4947cb4da4e7cf074ebb452e0b84f3d1ef5281b0e183967",
+    "skills-registry.md": "622f3bc48d2d72ef5475bb36f6af761579e428e43b6ae447c11f175f5f0000e1",
+    "tasks.md": "6a894b671e06b6bf2eb051e38dedec57ec01edfee108308e8234da6397fa4f4e"
+   },
+   "house_rule_lines": {
+    "brand/brand.md": [
+     "23a5c307fce6fbeb59d858679a6cbccd6a629eaeee749bc14b90850cfe9f79d4",
+     "441042e54f1264b9e6c0b1e552562ddb9a32a98b6515a0859eff057a4426ae9a",
+     "df9573fe24c5d741fa131e5ad49caa7b4a3592efef6e411a50aa512224692652",
+     "a1231cd7137f7c36f560878e2483618f8c4c0702b60eb0578e2e7cd9584457fd",
+     "aed22c20a3d35bf91e7b097701a3260b926d7b8cfeb60726bf6e7775437678be",
+     "2683fb5d665f07171213f0f646a3b24d096d6f9320be27f643f97be2bedca6de",
+     "88e87836b9dd2f78c2a2e290af2de9e0d224f0e3ca161d42fe04d7c05ecc72fc"
+    ]
+   },
+   "label": "1",
+   "seeded_taste_rules": [
+    "3d73900a316e0d89ed3b69228599cff6f33413f875c57005688c9cc2bc1de250",
+    "84c957bcf8f9adea25ec45631d3fd940307f5afbf4ea65e9f888c2f92f5222c8",
+    "7e5e2b849788e5104540b31c5e8055b9697b77792d96252768d6d5015e030ebf",
+    "ae4c5b3f18b2bcd8ca7b211008a2543c9a0e609dd646396fd2756e38ef705ab2"
+   ]
+  }
+ ]
+}
