@@ -1,6 +1,6 @@
 ---
 name: map-files
-description: Learn how the owner already organizes their files and write it down as the file map, context/where-files-live.md, so every file Claude makes or saves lands in the right place, named their way, with a link on the right note. Use when the owner says "map my files", "learn my folders", "where do my files live", "redo my file map" or "I connected my Google Drive" (or OneDrive, SharePoint, Dropbox), when setup reaches the files topic, and when update-vault drafts the map for an older vault. Looks at folder and file names only, never inside files, and never moves, renames or deletes anything unless the owner asks.
+description: Learn how the owner organizes their files and write the file map, context/where-files-live.md. Use when the owner says "map my files", "learn my folders", "where do my files live", "redo my file map" or "I connected my Google Drive" (or OneDrive, SharePoint, Dropbox), during setup, and when update-vault drafts the map for an older vault. Reads names only; never moves, renames or deletes anything unless the owner asks.
 ---
 
 # Map my files

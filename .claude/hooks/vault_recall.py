@@ -12,7 +12,7 @@ WHAT IT DOES
        columns count, a person's first name counts on its own, and small
        dictation slips are forgiven ("Jordon" still finds Jordan). A slip is
        only forgiven when the word is not an everyday English word, so
-       "page" never finds Paige and "core" never finds Corey.
+       "page" never finds Paige and "brook" never finds Brooke.
     2. Every note's file name, its title, and any aliases in its frontmatter,
        so a brand-new note is findable before anyone adds a row.
 

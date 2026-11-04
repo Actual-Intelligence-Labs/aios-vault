@@ -6,8 +6,10 @@ HOW TO RUN IT
 
 WHAT IT CHECKS
   - Python: the automatic helpers need 3.9 or newer; Sheet Geek needs 3.10+
-  - Sheet Geek: the spreadsheet plugin is installed, with what it needs
-  - Claude's memory: pointed at memory/claude/ inside this vault
+  - Sheet Geek: the spreadsheet plugin is installed for this folder, with
+    what it needs
+  - Claude's memory: pointed at memory/claude/ inside this vault, and its
+    index within budget (75 lines and 10,000 characters)
   - Settings: the settings files are valid and wire up every helper
   - Each automatic helper (hook) actually runs, and how long it takes
   - Folder trust: Claude Code is allowed to run this folder's helpers
@@ -150,13 +152,32 @@ def newer_python_elsewhere():
 def check_sheet_geek(root):
     data, problem = load_json(os.path.join(config_dir(), "plugins", "installed_plugins.json"))
     plugins = data.get("plugins", {}) if isinstance(data, dict) else {}
-    installed = isinstance(plugins, dict) and bool(plugins.get(PLUGIN))
-    if installed:
-        entry = plugins.get(PLUGIN)
-        ver = ""
-        if isinstance(entry, list) and entry and isinstance(entry[0], dict):
-            ver = str(entry[0].get("version") or "")
+    entry = plugins.get(PLUGIN) if isinstance(plugins, dict) else None
+    entries = entry if isinstance(entry, list) else ([entry] if isinstance(entry, dict) else [])
+
+    # A user install works in every folder. A project or local install belongs
+    # to one folder path, so it counts only when that path is this vault.
+    def applies(x):
+        if not isinstance(x, dict):
+            return False
+        scope = x.get("scope")
+        if scope in (None, "user", "managed"):
+            return True
+        if scope in ("project", "local") and x.get("projectPath"):
+            try:
+                return os.path.realpath(str(x["projectPath"])) == os.path.realpath(root)
+            except Exception:
+                return False
+        return False
+
+    here = [x for x in entries if applies(x)]
+    if here:
+        ver = str(here[0].get("version") or "")
         say("ok", "Sheet Geek, the spreadsheet plugin, is installed" + (" (version " + ver + ")" if ver else "") + ".")
+    elif entries:
+        say("fix", "Sheet Geek is installed for another folder, not this one.",
+            "Say \"install Sheet Geek\" and Claude installs it here on your yes (a project install belongs to one "
+            "folder path, so moving or copying the vault needs it again).")
     else:
         say("fix", "Sheet Geek, the spreadsheet plugin, is not installed yet.",
             "Say \"install Sheet Geek\" and Claude installs it on your yes. By hand in VS Code: type /plugins in "
@@ -239,13 +260,18 @@ def check_memory(root):
         try:
             size = os.path.getsize(index)
             with open(index, "r", encoding="utf-8", errors="ignore") as fh:
-                lines = fh.read().count("\n")
+                text = fh.read()
+            chars, lines = len(text), text.count("\n")
         except OSError:
-            size, lines = 0, 0
+            size, chars, lines = 0, 0, 0
         if size > 22500 or lines > 180:
             say("fix", "Claude's memory index is near its load limit (" + str(lines) + " of 200 lines, "
                 + str(size // 1000) + " of 25 KB). Anything past the limit never loads.",
                 "Ask Claude to compact memory/claude/MEMORY.md: one short line per note.")
+        elif chars > 10000 or lines > 75:
+            say("fix", "Claude's memory index is over its budget (" + str(lines) + " lines, " + str(chars)
+                + " characters; budget 75 and 10,000).",
+                "Ask Claude to shorten the longest lines or group a topic under one hub note.")
 
 
 def check_settings(root):

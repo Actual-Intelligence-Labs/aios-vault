@@ -1,6 +1,6 @@
 ---
 name: onboard
-description: First-time setup for this vault, and the way back in when setup was interrupted. Use when someone says "set me up", "onboard me", "get started", "let's get started", "I just downloaded this", "I just cloned this", "fill in my vault", "finish my setup", "redo my setup", "refresh my brand", "redo my brand" or "I added my logos", or when CLAUDE.md still shows {{YOUR_NAME}} and the owner wants to begin. Checks the install first (Python, the Sheet Geek plugin, folder trust) and offers to fix what is missing, then holds a short interview that adapts to each answer and never asks more than 15 questions, writes everything into the vault, and ends with a short list of what is still missing. Safe to run again. For a vault filled in with an older version of this template, use update-vault instead.
+description: First-time setup for this vault, or resuming it. Use when someone says "set me up", "onboard me", "get started", "let's get started", "I just downloaded this", "I just cloned this", "fill in my vault", "finish my setup", "redo my setup", "refresh my brand", "redo my brand" or "I added my logos", or when CLAUDE.md still shows {{YOUR_NAME}} and the owner wants to begin. Checks the install, then a short interview. For a vault filled in with an older template, use update-vault.
 ---
 
 # Setup
@@ -73,6 +73,8 @@ If pip refuses with `externally-managed-environment`: on a Mac, run it again wit
    claude plugin marketplace add 'Actual-Intelligence-Labs/sheet-geek#release'
    claude plugin install sheet-geek@sheet-geek --scope project
    ```
+
+   A project install belongs to this folder path. If the folder moves or is copied, install it again.
 
    The first line may say the marketplace is already there; that is fine. The second ends with "Successfully installed". It rewrites `.claude/settings.json` with the same settings in a different order, which is expected. Sheet Geek starts working after the reload at the end of setup (or right away if the owner types `/reload-plugins`).
 3. **If no `claude` program turns up, or the install fails,** the owner does it by hand, in VS Code: type `/plugins` in the Claude Code box; if **sheet-geek** is not listed on the **Plugins** tab, add `Actual-Intelligence-Labs/sheet-geek#release` on the **Marketplaces** tab; then click **Install** next to **sheet-geek** and choose **Install for this project**. In a terminal session, the same is two lines typed one at a time: `/plugin marketplace add Actual-Intelligence-Labs/sheet-geek#release`, then `/plugin install sheet-geek@sheet-geek`.

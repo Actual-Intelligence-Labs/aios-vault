@@ -106,7 +106,7 @@ Five hooks, in `.claude/hooks/`. Each one runs at a set moment and, when it has 
 
 | When | Hook | What it does |
 | --- | --- | --- |
-| A session opens | **Session pulse** | Gives Claude a short briefing: notes changed this week, your latest captured thoughts, open to-dos, your other recent sessions in this folder, a handoff note if you left work mid-way, and housekeeping (a note nobody indexed, Python too old, memory not set up yet). |
+| A session opens | **Session pulse** | Gives Claude a short briefing: notes changed this week, your latest captured thoughts, open to-dos, your other recent sessions in this folder, a one-line summary of a handoff note if you left work mid-way (Claude reads the full note only when you return to that work), and housekeeping (a note nobody indexed, Python too old, memory not set up yet). It stays quiet after Claude compacts a long chat, and for helper agents. |
 | You send a message | **Vault recall** | If you name a person, company, project or note it knows, even misspelled, Claude reads that note before it answers and updates the same note if anything changed. If you ask about someone it does not recognize, it searches the vault before asking you. |
 | You send a message | **Auto-capture** | If the message is a loose thought rather than an instruction, Claude files it in the right place instead of just saying "noted". |
 | You send a message | **Brand guard** | If you ask it to make something (a proposal, a post, an email, a PDF), Claude reads your brand, voice and taste files before writing a word. |
@@ -116,7 +116,7 @@ What they do not do, honestly:
 
 - They nudge, they do not do the work. A hook only puts an instruction in front of Claude at the right moment. Claude still does the reading and the writing, and every change shows up in Obsidian.
 - They read only files on your computer (this folder, plus Claude Code's own record of your sessions) and never use the internet.
-- They run only inside a session you opened, and they need Python. Without Python they quietly do nothing, which is why setup checks for it first. When they run, you may see a short status line flash by, such as "Looking up names in your vault".
+- They run only inside a session you opened, and they need Python. Without Python they cannot run, but the session opens with a line saying VAULT HOOKS DOWN, so Claude tells you and offers the install check. That is also why setup checks for Python first. When they run, you may see a short status line flash by, such as "Looking up names in your vault".
 - Only the brain log can hold a reply, and only once per reply.
 - Their word lists are guesses about how you talk, and you can change them. If something you make is never caught, say "add show notes to the brand guard list" and Claude edits the file.
 
@@ -139,6 +139,17 @@ No. On purpose.
 - **Nothing irreversible happens without you.** Claude drafts, stages, and shows you. You press any button that sends, pushes, deploys, publishes, or pays.
 
 This is a deliberate trade. You give up "it did things while I slept" and you get a system that cannot surprise you, cannot be reached by a stranger, and cannot spend your money.
+
+## What's new in v2.1.0
+
+- The session briefing no longer repeats itself after Claude compacts a long chat, or inside helper agents, so long sessions load less text.
+- If no Python 3.9 or newer is found, each session now opens with a line saying the automatic helpers are off (VAULT HOOKS DOWN), and Claude offers the install check instead of failing silently.
+- A waiting handoff note now shows as a one-line summary (title, goal, age). Claude reads it in full only when your message is about that work, and deletes it only after you pick the work up.
+- The vault check no longer reports Sheet Geek as installed when it was installed for a different folder, and the guide says to install it again after moving the vault.
+- Claude's memory index has a tighter budget (75 lines, 10,000 characters). Related memories group under one hub note, and the warning names the longest lines.
+- CLAUDE.md and the longest skill descriptions are shorter, so every chat loads less. Every rule and every trigger phrase is kept.
+- "update my vault" now picks the newest release the same way with or without git, and never moves a vault to an older version.
+- The briefing notices a setup that stopped partway and offers to resume, and greetings like "good morning, how are you" or "hope you are well" are no longer filed as loose thoughts.
 
 ## Already using the old version?
 

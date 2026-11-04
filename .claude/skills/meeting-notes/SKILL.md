@@ -1,6 +1,6 @@
 ---
 name: meeting-notes
-description: Turn a meeting notes document or transcript into a filed summary and routed work. Use when the owner says "process the meeting notes", "summarize that call", "what came out of my meeting", "file the notes from today's call", "recap the call with X", or pastes meeting notes and asks what to do with them. Gets every name right, files the summary under the right note with a link to the source document, routes the owner's own action items, and drafts one message for items owned by other people (draft only, never sent). Not for preparing for a meeting that has not happened yet.
+description: Turn meeting notes or a transcript into a filed summary and routed work. Use when the owner says "process the meeting notes", "summarize that call", "what came out of my meeting", "file the notes from today's call", "recap the call with X", or pastes notes and asks what to do. Messages to others are drafts, never sent. Not for preparing for a future meeting.
 ---
 
 # /meeting-notes

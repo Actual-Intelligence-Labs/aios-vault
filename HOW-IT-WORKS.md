@@ -24,7 +24,7 @@ The rest of this page is the reference you come back to when you are not sure wh
 | `tasks.md` | To-dos with no deadline, one checkbox line each. The session pulse shows Claude the open ones. | Both. | Whenever something small comes up or gets done. |
 | `ideas.md` | Half-formed things worth keeping. Not commitments. | Both. | Whenever you have one. Prune it now and then. |
 | `skills-registry.md` | Every skill in plain English: where it came from, whether it runs code, and its status. | Claude, via `/new-skill`. | When a skill is added, changed or retired. |
-| `HANDOFF.md` | Only exists when you stopped mid-task. What was in flight and the next step. | Claude, via `/handoff`. | Written when you stop, read and deleted by the next session. Never saved in git. |
+| `HANDOFF.md` | Only exists when you stopped mid-task. What was in flight and the next step. | Claude, via `/handoff`. | Written when you stop. The next session's pulse shows a one-line summary; Claude reads it in full when you return to that work and deletes it once that work is picked up. Never saved in git. |
 | `brand/README.md` | How the brand folder is filled in and used. | Ships with the kit. | Rarely. |
 | `brand/brand.md` | Your colors, fonts, logo files, tagline, and one-liner. Every produced document reads it first. | Claude writes it from your website during setup. You correct it. | When your brand changes. |
 | `brand/logos/` | Your actual logo image files. One of only two places the vault holds real files. | Claude copies them in during setup. | When you get new logos. |
@@ -51,7 +51,7 @@ The rest of this page is the reference you come back to when you are not sure wh
 | `.obsidian/` | Obsidian's settings for this vault: which folders to hide, which built-in features are on. | Obsidian, and you. Ask Claude to edit it rather than hand-editing. | Rarely. |
 | `.claude/settings.json` | Wires up the five automatic checks (hooks), names the Sheet Geek plugin and switches it on for this folder (Claude Code still needs it installed once, which setup does on your yes), and stops Claude from starting Claude Code's built-in `schedule` and `loop` skills on its own (you can still type them yourself). | Ships with the kit. | Only if you add or remove a hook. |
 | `.claude/settings.local.json` | Settings for this computer only: where Claude's memory lives (setup writes it), plus any permissions you approved with "don't ask again". Never saved in git. | Claude Code and setup. | Rarely. |
-| `.claude/hooks/run.sh` | The tiny launcher every hook goes through. It finds Python on your computer and runs the named script. If there is no Python, it quietly does nothing, so a missing Python never breaks a turn. Skills that run a Python script ask it which Python to use, so the whole vault uses the same one. | Ships with the kit. | Rarely. |
+| `.claude/hooks/run.sh` | The tiny launcher every hook goes through. It finds Python on your computer and runs the named script. If there is no Python, the hooks cannot run, so it never breaks a turn; instead the session pulse prints a VAULT HOOKS DOWN line and Claude offers the install check. Skills that run a Python script ask it which Python to use, so the whole vault uses the same one. | Ships with the kit. | Rarely. |
 | `.claude/hooks/session_pulse.py` | The session pulse: a short briefing for Claude when a session opens. | Ships with the kit. | Rarely. |
 | `.claude/hooks/vault_recall.py` | Vault recall: spots names in your message and points Claude at their notes. | Ships with the kit. | Rarely. |
 | `.claude/hooks/auto_capture.py` | Auto-capture: spots a loose thought and has Claude file it. | Ships with the kit. | Rarely. |
@@ -146,7 +146,7 @@ You do not have to remember to write them. Every skill in this kit links what it
 
 ## What happens in a session
 
-Five small scripts, called **hooks**, run at set moments. Each one looks at your message or at files on your computer and, when it has something to say, puts a short instruction in front of Claude. None of them uses the internet, none runs outside a session you opened, and if one breaks it stays silent rather than breaking your turn. They all need Python, and they all go through `.claude/hooks/run.sh`, which quietly does nothing when Python is missing.
+Five small scripts, called **hooks**, run at set moments. Each one looks at your message or at files on your computer and, when it has something to say, puts a short instruction in front of Claude. None of them uses the internet, none runs outside a session you opened, and if one breaks it stays silent rather than breaking your turn. They all need Python, and they all go through `.claude/hooks/run.sh`. When Python is missing, none of them can run, but the session opens with a VAULT HOOKS DOWN line so Claude tells you and offers the install check.
 
 ### When a session opens: the session pulse
 
@@ -156,10 +156,12 @@ Five small scripts, called **hooks**, run at set moments. Each one looks at your
 - the latest lines of `inbox.md`, so Claude knows what you said in passing yesterday;
 - the first few open to-dos in `tasks.md`;
 - your other recent Claude Code sessions in this same folder (their titles and your last message in each), so "where were we?" works across windows;
-- `HANDOFF.md`, if you left work mid-way;
+- a one-line summary of `HANDOFF.md` (title, goal, age), if you left work mid-way. Claude reads the full note only when your message touches that work, and deletes it once that work is picked up;
 - housekeeping: a project note with no index row, a skill with no registry row, Claude's memory index close to its load limit, the memory location not set (or pointing at an old place), Python too old.
 
-Claude tidies the housekeeping items in passing and mentions it in one line. Before setup has run, the pulse simply reminds Claude to offer it once.
+Claude tidies the housekeeping items in passing and mentions it in one line. Before setup has run, the pulse simply reminds Claude to offer it once. If setup stopped partway, it says how many questions were answered so Claude offers to resume.
+
+The pulse stays quiet after Claude compacts a long chat and inside helper agents, so a long session does not load the same briefing twice.
 
 ### Every time you send a message: three checks
 
@@ -266,7 +268,7 @@ Claude Code has a built-in memory: as it works, it writes short notes about how 
 
 Normally that memory sits in a hidden folder in your home directory. Setup moves it into this vault, at `memory/claude/`, by writing one setting into `.claude/settings.local.json` (a settings file for this computer only, never shared). That is why setup asks you to reload once. From then on you can read, link and correct Claude's memory in Obsidian like any other note.
 
-- `memory/claude/MEMORY.md` is the index: one line per memory note. Only the first 200 lines or 25 KB of it load when a session starts, so Claude keeps it short and moves detail into the notes. The session pulse warns when it gets close.
+- `memory/claude/MEMORY.md` is the index: one line per memory note, or one line per hub note (a note that lists several memories on one topic). Its budget is 75 lines and 10,000 characters, and only the first 200 lines or 25 KB ever load, so Claude keeps it short and moves detail into the notes. The session pulse warns when it goes over and names the longest lines.
 - Facts about your business (who someone is, a status, a price, a date) belong in the notes, not in memory. Memory holds how-to-work lessons and points to the note for the facts.
 - Preferences about output (too long, wrong tone, never do that again) go in `memory/taste.md`, which every produced document reads.
 - If you move the vault, the setting still points at the old place. The session pulse notices, and Claude can fix it in one step.

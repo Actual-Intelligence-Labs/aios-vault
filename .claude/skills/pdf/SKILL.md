@@ -1,6 +1,6 @@
 ---
 name: pdf
-description: Turn content into a designed PDF that comes out in the owner's brand automatically. Use for a PDF, one-pager, proposal, sell sheet, leave-behind, report, or any time someone says "make this look good" or "turn this into a PDF". Reads brand/brand.md, memory/taste.md and references/voice.md first, builds an HTML page from the shipped design system, renders it with a Chrome-family browser, then files the final where the owner keeps files and links it on the right note. Never asks the owner to describe their brand. Use this to make a new document; a general PDF skill is for reading, merging or filling PDFs that already exist.
+description: Turn content into a designed PDF in the owner's brand. Use for a PDF, one-pager, proposal, sell sheet, leave-behind, report, or when someone says "make this look good" or "turn this into a PDF". Reads the brand, taste and voice files first; never asks the owner to describe their brand. To read, merge or fill an existing PDF, use a general PDF skill.
 ---
 
 # pdf

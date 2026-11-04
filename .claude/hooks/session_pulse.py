@@ -7,11 +7,14 @@ WHAT IT DOES
     - your latest inbox captures and open to-dos
     - your other recent Claude Code sessions in this folder (title and your
       last message), so "where were we?" just works
-    - a HANDOFF.md note, if a session left work half done
+    - a one-line summary of HANDOFF.md, if a session left work half done
+      (read in full only when your message touches that work)
     - housekeeping: a note nobody indexed, a skill with no registry row,
-      Claude's memory not pointed at this vault or near its size limit,
+      Claude's memory not pointed at this vault, over its budget or near
+      its size limit,
       a Python too old for Sheet Geek
   You never see the briefing and never have to run anything.
+  It stays quiet after a compaction and inside helper agents.
 
 SAFETY
   Read only. It never writes a file, never touches the network, never blocks.
@@ -52,6 +55,8 @@ NOT_LISTED = {"CLAUDE.md", "inbox.md", "tasks.md", "HANDOFF.md", "MEMORY.md"}
 
 MEMORY_LINE_LIMIT = 200   # Claude Code loads only this much of MEMORY.md
 MEMORY_BYTE_LIMIT = 25000
+MEMORY_BUDGET_LINES = 75  # the index's own budget, well under the load limit
+MEMORY_BUDGET_CHARS = 10000
 
 
 def vault_root():
@@ -338,13 +343,33 @@ def memory_index_size(root):
         size = os.path.getsize(path)
     except OSError:
         return None
-    lines = read(path).count("\n")
+    text = read(path)
+    chars = len(text)
+    lines = text.count("\n")
     if size > MEMORY_BYTE_LIMIT * 0.9 or lines > MEMORY_LINE_LIMIT * 0.9:
         return ("- Claude's memory index (memory/claude/MEMORY.md) is near its load limit: " + str(lines)
                 + " of 200 lines, " + str(size // 1000) + " of 25 KB. Anything past the limit never loads in "
                 "a new session. Compact it this session: merge duplicates, keep one short line per note, move "
                 "detail into the notes themselves.")
+    if chars > MEMORY_BUDGET_CHARS or lines > MEMORY_BUDGET_LINES:
+        return ("- Claude's memory index (memory/claude/MEMORY.md) is over its budget: " + str(lines)
+                + " lines and " + str(chars) + " characters (budget 75 lines and 10,000 characters; Claude "
+                "Code stops loading at 200 lines or 25 KB). Longest index lines: " + longest_titles(text)
+                + ". Shorten those, or group a topic's lines under one hub note with a single index line; a "
+                "new memory joins its closest hub. Mention it once; no big rewrite unasked.")
     return None
+
+
+def longest_titles(text, n=5):
+    """The titles of the n longest '- [Title](...)' index lines, longest first."""
+    rows = [ln.rstrip("\n") for ln in text.splitlines() if ln.startswith("- [")]
+    rows.sort(key=len, reverse=True)
+    out = []
+    for ln in rows[:n]:
+        m = re.match(r"^- \[([^\]]*)\]", ln)
+        if m:
+            out.append(clip(m.group(1), 60))
+    return "; ".join(out) or "(none in the usual '- [Title](file.md)' form)"
 
 
 def housekeeping(root, set_up):
@@ -384,6 +409,67 @@ def age(seconds):
     return str(int(seconds // 86400)) + " days ago"
 
 
+def setup_partway(root):
+    """A line when intake.md says setup stopped partway, else None."""
+    text = read(os.path.join(root, "intake.md"), 6000)
+    if not re.search(r"\*\*Setup status:\*\*\s*in progress", text, re.I):
+        return None
+    m = re.search(r"\*\*Questions asked:\*\*\s*(\d+)\s*of\s*(\d+)", text)
+    where = " (Questions asked: " + m.group(1) + " of " + m.group(2) + ", saved in intake.md)" if m else ""
+    return ("Setup stopped partway" + where + ". Offer once to pick up where it stopped: \"set me up\" "
+            "resumes from intake.md and never re-asks an answered question.")
+
+
+HANDOFF_FRESH = 3600         # seconds: a session that is still open may be writing it
+HANDOFF_OLD = 48 * 3600       # seconds
+HANDOFF_LONG = 5000           # bytes
+
+
+def handoff_goal(text):
+    """First non-empty line under a '## What we were doing' heading, or ''."""
+    lines = no_comments(text).splitlines()
+    for i, ln in enumerate(lines):
+        if re.match(r"^##\s+What we were doing\s*$", ln.strip(), re.I):
+            for nxt in lines[i + 1:]:
+                s = nxt.strip()
+                if s.startswith("#"):
+                    return ""
+                if s:
+                    return s.lstrip("-* ").strip()
+            return ""
+    return ""
+
+
+def handoff_line(root):
+    """One line about HANDOFF.md at the vault root, or None when there is none."""
+    path = os.path.join(root, "HANDOFF.md")
+    if not os.path.isfile(path):
+        return None
+    try:
+        size = os.path.getsize(path)
+        secs = time.time() - os.path.getmtime(path)
+    except OSError:
+        return None
+    text = read(path, 20000)
+    title = h1(path) or "Handoff"
+    goal = handoff_goal(text)
+    goal = clip(redact(goal), 200) if goal else ""
+    line = ("HANDOFF.md is waiting at the vault root (written " + age(max(0, secs)) + ", "
+            + "%.1f" % (size / 1000.0) + " KB): \"" + redact(title) + "\"."
+            + (" Goal: " + goal + ("" if goal.endswith((".", "!", "?")) else ".") if goal else "")
+            + " Read the whole file when the owner's message touches that work (its subject, \"pick up "
+            "where we left off\", \"where were we\", or where things stand); for an unrelated message, "
+            "answer it and leave the file alone. Delete it (or only the section you picked up, if it holds "
+            "more than one) once the owner picks that work up.")
+    if secs < HANDOFF_FRESH:
+        line += (" It was written in the last hour, so a session that is still open may be writing it: "
+                 "ask the owner once before deleting it.")
+    if size > HANDOFF_LONG or secs > HANDOFF_OLD:
+        line += (" It is long or old, so it may be stale or belong to another session: read its title "
+                 "first, and confirm with the owner before acting on it.")
+    return line
+
+
 def main():
     try:
         data = json.load(sys.stdin)
@@ -391,6 +477,12 @@ def main():
         data = {}
     if not isinstance(data, dict):
         data = {}
+    # After a compaction the summary already carries the briefing, and a helper
+    # agent does not need the owner's briefing. Startup, resume and clear keep the
+    # full pulse. (agent_type alone is not a helper: `claude --agent` sets it too.)
+    if (data.get("source") == "compact" or data.get("agent_id")
+            or "/subagents/" in str(data.get("transcript_path") or "").replace("\\", "/")):
+        return
     root = vault_root()
     set_up = "{{YOUR_NAME}}" not in read(os.path.join(root, "CLAUDE.md"), 6000)
 
@@ -404,16 +496,13 @@ def main():
                    "middle of setup, offer it once, in one line (they can say \"set me up\", which runs the "
                    "onboard skill). Do not start asking setup questions unasked. Until setup runs, Claude's own "
                    "memory is saved outside this vault: setup points it at memory/claude/.")
+        partway = setup_partway(root)
+        if partway:
+            out.append(partway)
 
-    handoff = os.path.join(root, "HANDOFF.md")
-    if os.path.isfile(handoff):
-        try:
-            when = " (written " + age(time.time() - os.path.getmtime(handoff)) + ")"
-        except OSError:
-            when = ""
-        out.append("HANDOFF.md is waiting at the vault root" + when + ": a session left work half done. Read "
-                   "it before anything else and pick up from it. It is a one-time note: delete it once its "
-                   "contents are picked up.")
+    handoff = handoff_line(root)
+    if handoff:
+        out.append(handoff)
 
     if set_up:
         notes = recent_notes(root)

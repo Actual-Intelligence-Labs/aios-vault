@@ -63,7 +63,7 @@ CONTEXT = (
     "light logo on a dark page). If a brand field you need is still a placeholder in double curly braces, ask "
     "ONE short question and then WRITE the answer back into brand/brand.md so it is never asked again. Never "
     "ask the owner to re-describe their brand from scratch. If the output is a PDF or any designed document, "
-    "read and follow .claude/skills/pdf/SKILL.md."
+    "run the pdf skill (the Skill tool, or /pdf) and follow it."
 )
 
 MACHINE_SOURCES = {"system", "loop_wakeup", "schedule_wakeup", "poll_event"}

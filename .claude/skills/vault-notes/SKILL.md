@@ -1,6 +1,6 @@
 ---
 name: vault-notes
-description: The house rules for notes in this vault, covering where a note goes, how it is named and linked, the status line and Files section every client, project and person note carries, and how to find things. Use before creating, renaming, moving or archiving a note, when adding a person, company, project or tool, when linking a file to a note, and when the owner asks "what do we have on X", "pull up X", "find the note about X", "where did we put X", or mentions Obsidian, wikilinks, backlinks or the graph. For a loose thought use capture; to start a note for a new client, project or person use new-node.
+description: House rules for notes (placement, naming, links, status lines, Files sections, search). Use before creating, renaming, moving or archiving a note or linking a file to one, and when the owner asks "what do we have on X", "pull up X", "find the note about X", "where did we put X", or mentions Obsidian, wikilinks, backlinks or the graph. Loose thoughts go to capture; new client, project or person notes to new-node.
 ---
 
 # Vault notes
@@ -137,6 +137,6 @@ Two folders are the exceptions: `brand/logos/` holds the logo images every docum
 
 ## The AI's own memory
 
-`memory/claude/` is where the AI keeps what it learns about working with the owner: one short note per lesson or gotcha. `memory/claude/MEMORY.md` is the index, one line per note. Only its first 200 lines or 25 KB load when a session starts, so keep it under 180 lines and 22 KB: merge duplicates and shorten lines when it gets close.
+`memory/claude/` is where the AI keeps what it learns about working with the owner: one short note per lesson or gotcha. `memory/claude/MEMORY.md` is the index, one line per note or per hub note. Only its first 200 lines or 25 KB ever load, so keep it under 75 lines and 10,000 characters: when one topic reaches about 5 lines, move them into a hub note with one index line, and merge duplicates.
 
 Business facts (who someone is, where a deal stands, what was agreed) belong in the vault's notes, not in memory. A memory note holds the how-to and points at the note that holds the facts.

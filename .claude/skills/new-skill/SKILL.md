@@ -103,7 +103,7 @@ Rules for the description:
 
 - Say what it does, then "Use when the owner says..." with three to five real phrases in quotes. Include the messy, dictated versions, not just the tidy ones.
 - If another skill competes, say when to use this one and when the other.
-- One line, under about 1,000 characters.
+- One line. Keep it to about 300 to 500 characters: who says what (in quotes) and when it runs on its own. How it works goes in the body. Every description loads in every chat, so each extra sentence costs every session.
 - **Keep it valid.** The top block is YAML, a strict format, and one stray character makes the skill silently fail to load:
   - no colon followed by a space anywhere in the description
   - no space followed by `#` (everything after it is thrown away)
@@ -178,6 +178,7 @@ Skills live in a hidden folder, so Obsidian cannot link to them. If the skill se
 - A new skill is usually picked up within seconds. If it does not appear when you type `/`, reload: in VS Code, open the Command Palette and run "Developer: Reload Window", or start a new session.
 - **The owner asked for it:** have them say the thing they would naturally say. If the skill does not start, the description is what to fix: add their exact words to it and try again. Typing the slash command only proves the file exists.
 - **You built it on your own:** run its first step as a dry run, or let the next real use be the test.
+- After the owner reloads, check that the new skill shows in the skill list with its description; if it does not, the frontmatter is broken.
 
 ## Step 9: Tell the owner in one line
 

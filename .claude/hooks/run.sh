@@ -26,8 +26,10 @@
 # SAFETY
 #   If no suitable Python is found, or anything goes wrong, it prints nothing
 #   and exits quietly, so a missing Python can never break or block a turn.
-#   The one exception is the vault check (doctor.py): you ran that to find
-#   out what is wrong, so it says plainly that Python is missing.
+#   Two exceptions. The vault check (doctor.py): you ran that to find out
+#   what is wrong, so it says plainly that Python is missing. And the session
+#   pulse prints one fixed line saying the helpers are off, so Claude can
+#   tell the owner.
 #
 # You can run the vault check yourself any time from this folder:
 #       sh .claude/hooks/run.sh doctor.py </dev/null
@@ -139,9 +141,13 @@ if command -v py >/dev/null 2>&1; then
   usable py -3 && run_with py -3
 fi
 
-# No usable Python. Hooks stay silent. The vault check says so.
+# No usable Python. Hooks stay silent. The vault check says so, and the
+# session pulse hands Claude one fixed line so it can tell the owner.
 if [ "$script" = doctor.py ]; then
   echo "[fix] No Python 3.9 or newer was found on this computer, so the vault's automatic helpers are switched off."
   echo "      Install Python 3.10 or newer (python.org has a free installer), reload the window, then run this check again."
+fi
+if [ "$script" = session_pulse.py ]; then
+  printf '%s\n' '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"VAULT HOOKS DOWN: no Python 3.9 or newer was found on this computer, so the automatic helpers of this vault (session pulse, vault recall, auto-capture, brand guard, brain log) are all off this session. Tell the owner in one line, and offer the install check from the onboard skill (Step 0) or the Python steps in INSTALL.md. Meanwhile follow CLAUDE.md by hand."}}'
 fi
 exit 0

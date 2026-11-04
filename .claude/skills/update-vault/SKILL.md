@@ -1,6 +1,6 @@
 ---
 name: update-vault
-description: Bring a vault made from an older version of this template up to date without touching the owner's notes. Use when the owner says "update my vault", "upgrade my vault", "get the latest version", "pull in the new hooks and skills" or "is there a newer version", or when the session pulse says context/who-and-what.md is missing, or the vault still has the old .sh hooks. Downloads the latest version from github.com/Actual-Intelligence-Labs/aios-vault into a temporary folder outside the vault, shows a plain list of every change, and changes nothing until the owner says yes. Keeps their filled-in CLAUDE.md, never overwrites notes, contacts, memory or brand files, then fills the new parts from what the vault already knows and asks only what it cannot work out.
+description: Update a vault made from an older template version. Use when the owner says "update my vault", "upgrade my vault", "get the latest version", "pull in the new hooks and skills" or "is there a newer version", or when the session pulse says context/who-and-what.md is missing or the old .sh hooks are still there. Changes nothing until the owner says yes and never overwrites notes.
 ---
 
 # Update my vault
@@ -43,13 +43,13 @@ If that fails (some setups only allow writing inside the vault), use `outputs/va
 
    Use this fresh copy even when the vault is itself a git clone. A plain `git pull` in the vault is never used: in a filled-in vault it would merge the template's blank notes into the owner's notes. Taking only the system files from a fresh copy of the template is the safe form of that pull.
 
-2. **Without git,** download it over https. First the newest release:
+2. **Without git,** download it over https. First the list of release tags:
 
    ```sh
-   curl -fsSL https://api.github.com/repos/Actual-Intelligence-Labs/aios-vault/releases/latest
+   curl -fsSL https://api.github.com/repos/Actual-Intelligence-Labs/aios-vault/tags
    ```
 
-   If that returns a `tag_name`, download that release; if it fails, use the main branch. Then unpack it:
+   Take the highest vX.Y.Z name in that list by version order (the same tag the git route picks with `git tag --sort=-v:refname`) and download it. If the list is empty or the call fails, use the main branch. Then unpack it:
 
    ```sh
    curl -fsSL -o "$WORK/template.tar.gz" https://github.com/Actual-Intelligence-Labs/aios-vault/archive/refs/tags/<tag>.tar.gz
@@ -59,6 +59,8 @@ If that fails (some setups only allow writing inside the vault), use `outputs/va
    For the main branch, the address ends in `refs/heads/main.tar.gz` instead. The unpacked folder (the one new folder in the work folder, its name starting with `aios-vault-`) is the template copy.
 
 3. **If the download fails** (offline, or GitHub unreachable), say so in one line and stop. Nothing has changed.
+
+An update never moves a vault backwards. If the vault's `README.md` has a "What's new in vX.Y.Z" heading with a higher version than the one downloaded, say so in one line and stop.
 
 ## Step 2. Sort every file
 

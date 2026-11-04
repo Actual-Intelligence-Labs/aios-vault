@@ -24,7 +24,7 @@ import time
 
 FORCED_MSG = (
     'FORCED CAPTURE. This message begins with "inbox:" or "capture:", so run the capture skill '
-    "(.claude/skills/capture/SKILL.md) now, no matter what else it looks like. Read that skill and follow it. "
+    "(the Skill tool, or /capture) now, no matter what else it looks like, and follow it. "
     "Strip the prefix. Clean up dictation noise (filler words, false starts, run-on phrasing) without changing "
     "the meaning. Check every name against context/who-and-what.md first and use the name as written there. "
     "Route it to exactly ONE home: a calendar event if it is time-bound, a project note if it belongs to a "
@@ -39,7 +39,7 @@ FORCED_MSG = (
 
 SOFT_MSG = (
     "This message looks like a loose thought, a half-formed idea, a reminder, or a to-do rather than an "
-    "instruction. Do not merely acknowledge it. Read the capture skill (.claude/skills/capture/SKILL.md) and "
+    "instruction. Do not merely acknowledge it. Run the capture skill (the Skill tool, or /capture) and "
     "follow it: check names against context/who-and-what.md, clean up the wording, file it in exactly ONE home "
     "(calendar event, project note, decisions/log.md, memory/taste.md with a scope tag and its principle, "
     "tasks.md, context/about-me.md, context/about-business.md, a row in context/who-and-what.md for a new "
@@ -79,6 +79,7 @@ ACK_WORDS = set("""
 hi hey hello morning good evening afternoon thanks thank you thx ty ok okay k kk cool nice great perfect awesome
 sounds looks lgtm got it yes yeah yep yup no nope sure so much all right alright fine love that this works
 noted makes sense brilliant amazing excellent wonderful lovely cheers appreciate appreciated very much
+hope are well how hows doing going its whats up today you
 """.split())
 
 # A short reply that opens with one of these is an answer to a question,
