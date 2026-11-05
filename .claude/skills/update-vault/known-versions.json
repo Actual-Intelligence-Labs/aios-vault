@@ -1,8 +1,94 @@
 {
-  "_what_this_is": "Fingerprints (SHA-256 hashes) of earlier versions of this template, so update-vault can tell a file the owner never touched from one they changed, without needing the template's history. A hash holds no text. Line endings are ignored when hashing.",
+  "_what_this_is": "Fingerprints (SHA-256 hashes) of earlier versions of this template, so update-vault can tell a file the owner never touched from one they changed, without needing the template's history. A hash holds no text. Line endings are ignored when hashing. claude_section_lines has one hash per line of each CLAUDE.md section, so a built-in section with lines the owner added can be told apart: blank lines are left out, and spaces or tabs at the end of a line are ignored.",
   "_when_releasing": "Before releasing a new version, add the previous release as a new entry: run 'python match_known.py record <a clean copy of the previous release> <its label>' and paste the printed object into versions. Never remove an entry.",
   "versions": [
     {
+      "claude_section_lines": {
+        "(top)": [
+          "0ef37ce1030a90eab511a8cb0df39a5a09406daebb36cd9cf061a80251dd7501",
+          "05790ef9ea1b5e01ef7fd0dd9be7b39dd3896d7a73a49bea6f4938e33da3fcbd"
+        ],
+        "Connections": [
+          "dda8cfef49c080c56da28c6155372eab28f04003fddf1e03cabc4d6cd9e27589",
+          "f0d316d379ede0f5812e5d802bd623383b0cd2b5b9a7b827d314aac4ca3a88bd"
+        ],
+        "How to work with me": [
+          "2081f6ff5896b2c662a20e2710d59c9e5943f46f204e33ad4b3779fa2a412d75",
+          "06bf02898ff526270f558606acf2064a10e2e4b54a66c71a5c28e6918d2bdaf3",
+          "e79a163556333fa5f103252d81385b784617c727a18421d0ec38d04345b0a729",
+          "656a2d74da7a32e930f728b710190bb05b6ff00a2c4f5747393a8c82201c69c7",
+          "eecdd268f0d690860de50946a47bb1aff3010631254c6e803ff1e4ad5e90efae",
+          "c989b1984dd81ee131b629e05c2df4f49a14784e5c355393a4c20065933e2575",
+          "0bb1110387670b298318675073b50a12951ee46fa0be9a0293b1ca0eb2a9db23"
+        ],
+        "Placeholders mean \"not known yet\"": [
+          "c69e25a05bc970fd09c6ef618b9ed45c83a3fdc7151944bfdc17bb6f3d3300b0",
+          "eb98964862a45ee98932647cdf0a77248f462ae6615f597656dd94d6fbf328b4",
+          "9e41be3af32c6fa834609a3a2445ce46504365f0c461688a5e8a208a0261f014",
+          "b80990bc8ee6f314214bdf0038863bb2edee54045fe8c1eb2f44cbfbd479effc",
+          "a4b31cefaed0576417338090f73abc24e4b8e2475851b0316890832269aa8de9"
+        ],
+        "Read the source before you state a fact": [
+          "895f674b7cec4acf3e696ea40ef443c7d113b59af1a191c5450d1662f523df3b",
+          "128038cc68cd547f1ed2375c5bbf9271acf8fe4f8a729e9b33937ff071770724"
+        ],
+        "Safety rules that never bend": [
+          "b48b6de0d0fed626200f2cc407fa30477ba17aeedea7891c41e7e7d505a40837",
+          "b0aabbc2cd9c9af830c92a00642323ecaa2ae55a170cab9d632956b300d67975",
+          "ef9439ac7870a67284b095d9f718f08c3fbc2260c53378309e9f3610adf1d7ca",
+          "6c538dd5be7de0412384330112ca7dc46e1038030a0193c314fa0dab46ee8f10",
+          "e9da61484c6edcd19da00f57f783d7812eec7bf3579a90c1e26c894b323ae084"
+        ],
+        "Standing behaviors (no command needed)": [
+          "0536413e209dfe9ba0446f56d6f328e2e99f04e984687c165b2d359e380e8a45",
+          "29331902b89ed728659e0a9649efbd5430987692394777b5067c900417492230",
+          "6fc2e2b2478f3c05c4feaca28df757cf67cf6926cea69dd26ae2d7a2a7095ae5",
+          "03c97196ae3f2b601ed5bc022c9b2185342a376c7b2245e79ba39bf7c4bc221b",
+          "5df05ed02bfb40861edb751ad1a629352ec464411169c22d74b3c393c2f20967",
+          "46b81ca50ad32e24fbe706ca012276b8bccab9bc69daef8cb67875b1429e9457",
+          "600ee04f8a47d4412677a0cf742f3b666c0b6e265ddfd50b9d0c56df27c27062",
+          "fef64c4de7edc3670b3aecdd471defe3e6b15618d291285ff55fff20a49cfc7e",
+          "ebd4f64442aa71023c9154fea952d3a9df9d15a34daea1cf0a4cb71d5a0a28bb",
+          "6abbe94da547b1cf9e19b0e035630bb6154b935115c604a10ab0e9afe2b2f0a7",
+          "8a15119c4ecc4596b5eaf130f46b86f28164185d013fa920dcdc9be1103d0825",
+          "1eee9229f2a95d8e5e1c603b1f5484fe09f7e8ab34c1a7885813a16f80d69947",
+          "109cf9ad202168114e4c57c49562c4be16a2be6dba8e95e18bfda56256b7dc78"
+        ],
+        "Voice": [
+          "78861c5bf1ccc22a3d73371e25956ffb758fcd1fc25924dc61ae3496bd2a9a08",
+          "9b812e24dda8ce292c1b7e9f9e9787707e6a0d74173e3ca1a67e6195e9e978df",
+          "7b35946e0a79941c693afd0772a20ee56f3cfa2c7925bc6fb2910c1abd6ef59c"
+        ],
+        "What the business does": [
+          "2e720fe5b7cb636a3e0216d5f5fe36e290aa4db90fb94dede613cba809baf277",
+          "696368df45a5b3327a5c83bab6ec53b5bee47af23e077076f1ed9019b7a84885",
+          "69fe666d16f0cd090eeb8516afed70c2c99056b7766b619c8cd3f66afaf2016d"
+        ],
+        "Where things live": [
+          "dfc1ffaf12f278d876435ba084562ac36a483a0407b40d4510a809c1bb455e3e",
+          "82137304215664c647ece255e3eb8758653484bb742c8bd484b2c2c44cefc537",
+          "4199ba454d6d3ae83657120c2bb6bd674eefc0dd7d3cd4cc844171dc6725135b",
+          "788be4e1413c44350035562bbda2d58bf1d11d42fa731895edc1d612aff336b8",
+          "c2e6cde447ac25f5b72534a1b2502e90994ee16197fe7ac5ec759cba1f451aec",
+          "cc6d923a893968b80ba7f564b6159637b6dd989334a23b2e3f02dccbc28a1641",
+          "1c2a6c86651f09a341160cd978d79285aa2ce35ae0f0f5b299b41d63cd8a8cf1",
+          "e70c9993152f39bafc301fd017cea889b959a73768abb8d5a130317ddc0c2e3b",
+          "fe230396ea3ce9bd77204b3e498acbc5d3de17e1799e5dc8c4d127acdfef1c2a",
+          "37d4162ea2fbe9e64fcf24d6300c64feae28771815cef73a259f978c618587ca",
+          "863fb70e47564a59afb6b4ef06b0548f14cb6fa3ae3252697af8c3fe2ff3a3ae",
+          "f0aec68e04e2264eac1fa8c2f3526da6badcb40805f664325c43cf6727949bc7",
+          "5836bb6866268b7d91857ebbfbfc7d777af43fba3cab28a3bf0c3399798f2de3",
+          "43f4335c45bf2d1d94864e4d632e0f7e89e63177ae40797f30ed452c2ccc44a9",
+          "113b55ca2e716050331e2048cd4be43d772e9c77ca2542d4362700d91320081f",
+          "47e9f41f255eba78312db3fe6adbedadf019fde07f51207e61f693ad3503c508",
+          "75e778780055b77c617d641682c487aec7c41e0cd4098058eca2b26a2069950f"
+        ],
+        "Who I am": [
+          "bd055b5fd9f73052d66e4b90a9b4fc2834554d54567415ef2837014c482d05b1",
+          "5050f2b54ae41ad353b65a74c460d5bb395f24e331d2fc3aa17adbb88b879627",
+          "7d249466df61ad0fd95a9c96d4f87782808cc5bee11497c7876dce9ca7a65d4e"
+        ]
+      },
       "claude_sections": {
         "(top)": "bf01bf970f481b3e1dce2f3fcb0882e96c4d33bb1d763c37e91d57d60536d4a9",
         "Connections": "8f384d781d7fd42a09358f94b36753e64e648da9621e32b0a19683de9d75275a",
@@ -84,6 +170,135 @@
       ]
     },
     {
+      "claude_section_lines": {
+        "(top)": [
+          "c7d74f591593d0e448d5b46239617cd53dd01bc308291efb4e51772fe04cab12",
+          "d6a7480059cf78774ddcd041b09fa6b5e9c6b39de1073922bdb653e68529c5bf"
+        ],
+        "Connections": [
+          "dda8cfef49c080c56da28c6155372eab28f04003fddf1e03cabc4d6cd9e27589",
+          "5c2bbba7141b39462ddeadd56e30306bd87f109c793e02ad5288d2f6fcfe799d"
+        ],
+        "Continuity: every session picks up where the last one stopped": [
+          "a769f86456267faf068930ce2de2df7b8335479392bdb82ce676998dfff588de",
+          "643460edf4b5e8f4d5ece341c266e523b35e44bcfa68ea4ac2c43a129bf7618f",
+          "22d055be453201ce9793f03baafa706c014c4ff2be8b5a473658878579581d42",
+          "6fb85aaed29d6b125d448c3f7591925878e34db46904a77db1f7d5374cdcae3c",
+          "d26197f9091a544b901bb2f935177cb295faeadababfd8cc8d7635e04269c514",
+          "587039c3228b4702ff156b811959d3ad095ad411e070b9f437e7ce7eb3b20ff1",
+          "587edaa4ec6dec07f5cc0a238f51033d2965a0a59ad52ede638b591dd221869b",
+          "f0ac6ed81ed16e05d190dd130ee55d3e5d763c7fc42b3ece2ee6192ce91a62e9",
+          "cf36da17c16a0673f89f3e30768915403ed3486a22e9c99d210682235678308e"
+        ],
+        "Files": [
+          "c55f78cb1186e8e93dac63668e9ae9c7cd14b5a8ad73c342e7b8d95765d17d28",
+          "13801c7df8253aed1c491891d5b936c703ea1077ea138811c36efd924fa54a6c",
+          "ee83398ea651d340033ff08bb24aa0c9c14b1cde5bce97a0eccca383963c7d35",
+          "27454a166c5fadef0e9b2570906600468c03781198a984ba4dad904b1ba9016a",
+          "533f3813f474653d24cc385f238b3d6f281bfb2345d15bc09e5d9473b1259213",
+          "9b02157de8a4a03f3613d3094342ee9c18924f76fbc71850d3b3236c94a2f930",
+          "2a07a96385a688cc82fe6feb1123d55a79acfb3c6056463925b0ec71dee594a6",
+          "9e857ba32ab87bc5b1015bebfcc2aea3878be50187d0d93e65b96cc7eb380c7d"
+        ],
+        "How to work with me": [
+          "2081f6ff5896b2c662a20e2710d59c9e5943f46f204e33ad4b3779fa2a412d75",
+          "0cc673792e8ab5eedf44ee1e83885157b5055296d9f6aa84792a28185240872b",
+          "7406994e9a779fb3ef087e14e645610b481d06b83a3150df10f05102c5a86802",
+          "eecdd268f0d690860de50946a47bb1aff3010631254c6e803ff1e4ad5e90efae",
+          "e93e77275e1c5a00085c9721087aaf02987c8e8b3c9b793e7ff6725b2cbcab3b"
+        ],
+        "Placeholders mean \"not known yet\"": [
+          "c69e25a05bc970fd09c6ef618b9ed45c83a3fdc7151944bfdc17bb6f3d3300b0",
+          "3ac21bb69a0913870879bd6cf0a6f2f66f3b29d9e36f0b72d4b32ccb18dd8b62",
+          "9e41be3af32c6fa834609a3a2445ce46504365f0c461688a5e8a208a0261f014",
+          "b80990bc8ee6f314214bdf0038863bb2edee54045fe8c1eb2f44cbfbd479effc",
+          "a4b31cefaed0576417338090f73abc24e4b8e2475851b0316890832269aa8de9"
+        ],
+        "Read the source before you state a fact": [
+          "895f674b7cec4acf3e696ea40ef443c7d113b59af1a191c5450d1662f523df3b",
+          "128038cc68cd547f1ed2375c5bbf9271acf8fe4f8a729e9b33937ff071770724"
+        ],
+        "Safety rules that never bend": [
+          "b48b6de0d0fed626200f2cc407fa30477ba17aeedea7891c41e7e7d505a40837",
+          "db606cb7c506368e6324e86bc2079440909b1983ce22aa459631c771f7a9110d",
+          "ef9439ac7870a67284b095d9f718f08c3fbc2260c53378309e9f3610adf1d7ca",
+          "461f0dafb21fea4529e4561abddd4a4d5bd9caebdfd2ff4c35aa76bf9b8afe74",
+          "e40c33997b630eb62a352787f685defe82ead1b18ab162bf21f1f6fee4292c3e",
+          "6bf0f1417214dda0cb3eec0cc9e72181d98abe40b515090b42704e700505ad24",
+          "180a33a355e0250ab31829df96780996965eb01f5a173feb15f346d41dcb6d36",
+          "1b05d9810dd19ad47477064a391ddc8eb22a2d49d8718cae2e61f8318a641009"
+        ],
+        "Skills: use them, and grow new ones": [
+          "4e95b09c5a5a21955ee666f0f83f76edb8cb1668268daea3ca40f4464635bda4",
+          "3bdd07b3dec82c30a335ce8052b832747c3adc13305ef26fce7d0c6e184bad73",
+          "572fadd9780c45ffb0f89f65c496948f92f69532ee5b5d38bbce25b5ab3f64b7",
+          "ea632944564328d34d785fb3ae4ef86e401ccd769fc872e711fd72c9ef139c46",
+          "e0d860dd23a4414ceebe58109b2d159567ac2524cd15f17c99b377cfb112a72f",
+          "af86ae2a53cfa9d2cd7d73c6ed72aa3925ba9c16082154d339ecfefbdb8f5725"
+        ],
+        "Spreadsheets": [
+          "5fbe118819059d02e7b66e8740a6917bb60e4b0c3cca4fac04fb3bbded3135c8",
+          "9e503132f497b7ea7e59fcf6acd493447c301f1d3ec68407dd1189e121883b34",
+          "2c0416b102ca44806585ad18876978af992612f53b93fe05c6eb13fc6c4680cd",
+          "8efc4328c7f03d05a05dee9667a36b0ecab9db004270213ecdebade6c2fffc4d"
+        ],
+        "Standing behaviors (no command needed)": [
+          "0536413e209dfe9ba0446f56d6f328e2e99f04e984687c165b2d359e380e8a45",
+          "e6b597d535c7f22ea4adae50fb4b60eb3c77f548b2ea57ac99669ae9778f82e4",
+          "6fc2e2b2478f3c05c4feaca28df757cf67cf6926cea69dd26ae2d7a2a7095ae5",
+          "9c3293f9457fc46ef52d92ce0d471a969dca112eb8dc556216688520b96b8144",
+          "8c8d3b8c6ffcb6691b451747874a292f8c0182547c37035c84063c59e0ad3599",
+          "7b5b179c3cade50a85145c6ccfaa7637e7fe1ef060a446953b09e5df01ee47fc",
+          "449c475dd4c86fedbce3ccd5689baf8021260291a56b13ad10487877ec9410fc",
+          "6aff9e6618fbb210d4a30d76e41bfe19bc6a060334f3411f90c0968881db6dff",
+          "ebd4f64442aa71023c9154fea952d3a9df9d15a34daea1cf0a4cb71d5a0a28bb",
+          "6abbe94da547b1cf9e19b0e035630bb6154b935115c604a10ab0e9afe2b2f0a7",
+          "8a15119c4ecc4596b5eaf130f46b86f28164185d013fa920dcdc9be1103d0825",
+          "1eee9229f2a95d8e5e1c603b1f5484fe09f7e8ab34c1a7885813a16f80d69947",
+          "109cf9ad202168114e4c57c49562c4be16a2be6dba8e95e18bfda56256b7dc78"
+        ],
+        "Voice": [
+          "78861c5bf1ccc22a3d73371e25956ffb758fcd1fc25924dc61ae3496bd2a9a08",
+          "9b812e24dda8ce292c1b7e9f9e9787707e6a0d74173e3ca1a67e6195e9e978df",
+          "7b35946e0a79941c693afd0772a20ee56f3cfa2c7925bc6fb2910c1abd6ef59c"
+        ],
+        "What the business does": [
+          "2e720fe5b7cb636a3e0216d5f5fe36e290aa4db90fb94dede613cba809baf277",
+          "9cc43ed03ec0a3fa99e072767b743af9afd2df5b95afaf69a2e028633c067569",
+          "69fe666d16f0cd090eeb8516afed70c2c99056b7766b619c8cd3f66afaf2016d"
+        ],
+        "Where things live": [
+          "dfc1ffaf12f278d876435ba084562ac36a483a0407b40d4510a809c1bb455e3e",
+          "82137304215664c647ece255e3eb8758653484bb742c8bd484b2c2c44cefc537",
+          "4199ba454d6d3ae83657120c2bb6bd674eefc0dd7d3cd4cc844171dc6725135b",
+          "7b75ce046cdb7968aa33bea9eda00103d886d5c3ab4be28a95e0224d4c0aff0a",
+          "88b962172eb3c8da66e0029542e700468956040e847519054c389afd0fa3710b",
+          "735a1d59f16d7faa9a141bea4b0770f7bd49623921b52b868082cf3bcef46211",
+          "f69a0a5b11999073babc40b53c8597f91e5be976eb4828288a3012cf7f959346",
+          "9209dbfe4cab8cf7b05b8803b020bf3845094f2d3a3aa97c58d800d063f601d3",
+          "5a08dd852fa41f54193c1dd7df3c2ef333eb900022c7b05d4f9d9738ea8cba67",
+          "ddc721b8b9ceffb1a3f28e1a491e74fefbde59a4aff7023e9f9a10cf0e9b5d8e",
+          "30c073a63ca7529361a523876adbfe91071606371a59ca621f38809ac0d2c098",
+          "4978a4ec4a89ec4989731300b7aef37428958a4edfd5f1f1e78a743d9edd657b",
+          "8cb79d8a1650408a0cb601fdc7f9f38f09130655f35bb7be01fcb72dc8a07b75",
+          "1be586b2c4e27f44dab3ffe947b74b3a0f9c056d58bfee39ef5f6e9ae4158aa5",
+          "2060f6dd655b4eccd1f2aaf66b79e4fd9a72919bafed034c69e112fdc42b6d6f",
+          "a643194ef0d4c6b79b2ff318f45a17f4309a9b08cd1cb791a6e92009b8f3c7f1",
+          "5836bb6866268b7d91857ebbfbfc7d777af43fba3cab28a3bf0c3399798f2de3",
+          "ced515726bf78fc73e53c0f8f9f6507626443b8b5a0ad6f4df5b6bcfb759d81d",
+          "aa75db3eae3c5e51061631479b4fea794a2af1889972ca9881c87ad202654302",
+          "142a8b1c22ae0d17f7eed600aba2bce160158b265500954b53cbe5e74a6dd86a",
+          "01ae2867b1da261c58d834dda8d6ffa7d92bae66abac49cfa39fea98b8c7b6cd",
+          "19fd6056e6716e7e1a8fbda3d2f8b0411cfb7bcdf1eae40726f7b0c583090ae2",
+          "5f020b78ef93d491cb81e986eff7ca5e3927623186f0351333699660d917d27c",
+          "d05f2422381d19ed5d230c125f9dea4e7dd7a0ddbd20b056d79058d0312fe02e"
+        ],
+        "Who I am": [
+          "bd055b5fd9f73052d66e4b90a9b4fc2834554d54567415ef2837014c482d05b1",
+          "60708bd442ed3220d0fe723d298eedeffbd3153cebefac1d1932dad301255809",
+          "7d249466df61ad0fd95a9c96d4f87782808cc5bee11497c7876dce9ca7a65d4e"
+        ]
+      },
       "claude_sections": {
         "(top)": "5f10ad6ff7a7949b7beae9511124f0150b9725d8fe10e4719b4f9a595e2e992e",
         "Connections": "93b0500b1860638d00c4a19a8d08e3cb69297542f0f10021f464f5086a303c95",
@@ -162,8 +377,225 @@
         "skills-registry.md": "525dc2a2755d452b2764b7bd2e841e3f146ef49059e4b463bf54ed4bc2a2ace0",
         "tasks.md": "3824c0817ca4a893d70857f8fbeed8c34819f2f3f97b3add92516d5a37ba96fb"
       },
-      "house_rule_lines": {},
+      "house_rule_lines": {
+        "memory/claude/MEMORY.md": [
+          "889ffdfa481150ae2c72b16a85c2ac100e75a37a7ee99cad433ed0f47633da63"
+        ]
+      },
       "label": "v2.0.0",
+      "seeded_taste_rules": [
+        "863eff4e00567aa14feffc43acc8ab63a6c938d76b6d87056f75c37228fcb9a9"
+      ]
+    },
+    {
+      "claude_section_lines": {
+        "(top)": [
+          "c7d74f591593d0e448d5b46239617cd53dd01bc308291efb4e51772fe04cab12",
+          "d6a7480059cf78774ddcd041b09fa6b5e9c6b39de1073922bdb653e68529c5bf"
+        ],
+        "Connections": [
+          "dda8cfef49c080c56da28c6155372eab28f04003fddf1e03cabc4d6cd9e27589",
+          "5c2bbba7141b39462ddeadd56e30306bd87f109c793e02ad5288d2f6fcfe799d"
+        ],
+        "Continuity: every session picks up where the last one stopped": [
+          "a769f86456267faf068930ce2de2df7b8335479392bdb82ce676998dfff588de",
+          "850159e751273884ac9988c28e058442d2a57f8f6ea4c128ecd6782744795032",
+          "22d055be453201ce9793f03baafa706c014c4ff2be8b5a473658878579581d42",
+          "6fb85aaed29d6b125d448c3f7591925878e34db46904a77db1f7d5374cdcae3c",
+          "d26197f9091a544b901bb2f935177cb295faeadababfd8cc8d7635e04269c514",
+          "587039c3228b4702ff156b811959d3ad095ad411e070b9f437e7ce7eb3b20ff1",
+          "d54d085b645b42d1b92d841a7009ccd75aa80e89a8e383368f083de2753ae2dc",
+          "f9b47166d8c7d1031c02e291f24f23dc23b03a97b817f6b7e0661e81c1b6564f",
+          "28f71eb21dbaca0fb88e3a2d9fda5c92112d29d4cc45d975751f9b0d95bdd6ed"
+        ],
+        "Files": [
+          "c55f78cb1186e8e93dac63668e9ae9c7cd14b5a8ad73c342e7b8d95765d17d28",
+          "13801c7df8253aed1c491891d5b936c703ea1077ea138811c36efd924fa54a6c",
+          "ee83398ea651d340033ff08bb24aa0c9c14b1cde5bce97a0eccca383963c7d35",
+          "27454a166c5fadef0e9b2570906600468c03781198a984ba4dad904b1ba9016a",
+          "533f3813f474653d24cc385f238b3d6f281bfb2345d15bc09e5d9473b1259213",
+          "9b02157de8a4a03f3613d3094342ee9c18924f76fbc71850d3b3236c94a2f930",
+          "2a07a96385a688cc82fe6feb1123d55a79acfb3c6056463925b0ec71dee594a6",
+          "9e857ba32ab87bc5b1015bebfcc2aea3878be50187d0d93e65b96cc7eb380c7d"
+        ],
+        "How to work with me": [
+          "2081f6ff5896b2c662a20e2710d59c9e5943f46f204e33ad4b3779fa2a412d75",
+          "0cc673792e8ab5eedf44ee1e83885157b5055296d9f6aa84792a28185240872b",
+          "7406994e9a779fb3ef087e14e645610b481d06b83a3150df10f05102c5a86802",
+          "eecdd268f0d690860de50946a47bb1aff3010631254c6e803ff1e4ad5e90efae",
+          "2a53ca9b248d847e324df7229e7100fa167707649cd13891ba6b700ddfe1ab82"
+        ],
+        "Placeholders mean \"not known yet\"": [
+          "c69e25a05bc970fd09c6ef618b9ed45c83a3fdc7151944bfdc17bb6f3d3300b0",
+          "3ac21bb69a0913870879bd6cf0a6f2f66f3b29d9e36f0b72d4b32ccb18dd8b62",
+          "9e41be3af32c6fa834609a3a2445ce46504365f0c461688a5e8a208a0261f014",
+          "b80990bc8ee6f314214bdf0038863bb2edee54045fe8c1eb2f44cbfbd479effc",
+          "a4b31cefaed0576417338090f73abc24e4b8e2475851b0316890832269aa8de9"
+        ],
+        "Read the source before you state a fact": [
+          "895f674b7cec4acf3e696ea40ef443c7d113b59af1a191c5450d1662f523df3b",
+          "128038cc68cd547f1ed2375c5bbf9271acf8fe4f8a729e9b33937ff071770724"
+        ],
+        "Safety rules that never bend": [
+          "b48b6de0d0fed626200f2cc407fa30477ba17aeedea7891c41e7e7d505a40837",
+          "db606cb7c506368e6324e86bc2079440909b1983ce22aa459631c771f7a9110d",
+          "ef9439ac7870a67284b095d9f718f08c3fbc2260c53378309e9f3610adf1d7ca",
+          "461f0dafb21fea4529e4561abddd4a4d5bd9caebdfd2ff4c35aa76bf9b8afe74",
+          "e40c33997b630eb62a352787f685defe82ead1b18ab162bf21f1f6fee4292c3e",
+          "6bf0f1417214dda0cb3eec0cc9e72181d98abe40b515090b42704e700505ad24",
+          "180a33a355e0250ab31829df96780996965eb01f5a173feb15f346d41dcb6d36",
+          "1b05d9810dd19ad47477064a391ddc8eb22a2d49d8718cae2e61f8318a641009"
+        ],
+        "Skills: use them, and grow new ones": [
+          "4e95b09c5a5a21955ee666f0f83f76edb8cb1668268daea3ca40f4464635bda4",
+          "da1546489b661c80818d0142a8e82b1c865230ccde477ddc4b29c7c98f4d91b1",
+          "572fadd9780c45ffb0f89f65c496948f92f69532ee5b5d38bbce25b5ab3f64b7",
+          "76a35a262ea530d1833db5bd5e1b062defafd18f5d5a757ef81023cd1d64f594",
+          "62fb096565cba8da268e8f21d36727999700b0f79bf17da1434c3ea7f8851e41",
+          "af86ae2a53cfa9d2cd7d73c6ed72aa3925ba9c16082154d339ecfefbdb8f5725"
+        ],
+        "Spreadsheets": [
+          "5fbe118819059d02e7b66e8740a6917bb60e4b0c3cca4fac04fb3bbded3135c8",
+          "9e503132f497b7ea7e59fcf6acd493447c301f1d3ec68407dd1189e121883b34",
+          "2c0416b102ca44806585ad18876978af992612f53b93fe05c6eb13fc6c4680cd",
+          "8efc4328c7f03d05a05dee9667a36b0ecab9db004270213ecdebade6c2fffc4d"
+        ],
+        "Standing behaviors (no command needed)": [
+          "0536413e209dfe9ba0446f56d6f328e2e99f04e984687c165b2d359e380e8a45",
+          "05b083fe167b79798f47e43016e7e0520b44157aaab43cd11a5a209d55515c82",
+          "bf872f522b030fb19a6cbb311ac1dc3dbf9de0572c7edf4b2e3a18ef9c066915",
+          "8cf230e892b8f60d393f8f6ed0cb7c83ecb56baf4f739da77684867e06c0f535",
+          "6abbe94da547b1cf9e19b0e035630bb6154b935115c604a10ab0e9afe2b2f0a7",
+          "8a15119c4ecc4596b5eaf130f46b86f28164185d013fa920dcdc9be1103d0825",
+          "69e21f3e60ccaa8a73120e61cedeb2e2993bcbec2b0ed3205742a5412980f746",
+          "88594a79347f36cbd8c43dcc8b7f571ef592501819112c9c6503ef31a34d6e43"
+        ],
+        "Voice": [
+          "78861c5bf1ccc22a3d73371e25956ffb758fcd1fc25924dc61ae3496bd2a9a08",
+          "8cecd53d92a1d8dfd4980b6fae7f1b2b8c26e5c966369f77534a8e6d6a733750",
+          "7b35946e0a79941c693afd0772a20ee56f3cfa2c7925bc6fb2910c1abd6ef59c"
+        ],
+        "What the business does": [
+          "2e720fe5b7cb636a3e0216d5f5fe36e290aa4db90fb94dede613cba809baf277",
+          "9cc43ed03ec0a3fa99e072767b743af9afd2df5b95afaf69a2e028633c067569",
+          "69fe666d16f0cd090eeb8516afed70c2c99056b7766b619c8cd3f66afaf2016d"
+        ],
+        "Where things live": [
+          "dfc1ffaf12f278d876435ba084562ac36a483a0407b40d4510a809c1bb455e3e",
+          "82137304215664c647ece255e3eb8758653484bb742c8bd484b2c2c44cefc537",
+          "4199ba454d6d3ae83657120c2bb6bd674eefc0dd7d3cd4cc844171dc6725135b",
+          "7b75ce046cdb7968aa33bea9eda00103d886d5c3ab4be28a95e0224d4c0aff0a",
+          "88b962172eb3c8da66e0029542e700468956040e847519054c389afd0fa3710b",
+          "735a1d59f16d7faa9a141bea4b0770f7bd49623921b52b868082cf3bcef46211",
+          "f69a0a5b11999073babc40b53c8597f91e5be976eb4828288a3012cf7f959346",
+          "9209dbfe4cab8cf7b05b8803b020bf3845094f2d3a3aa97c58d800d063f601d3",
+          "5a08dd852fa41f54193c1dd7df3c2ef333eb900022c7b05d4f9d9738ea8cba67",
+          "ca43ac4bc6809ab5c787cff7ecfd31dd8b2d905fd9bccd347df823caffc427ec",
+          "30c073a63ca7529361a523876adbfe91071606371a59ca621f38809ac0d2c098",
+          "4978a4ec4a89ec4989731300b7aef37428958a4edfd5f1f1e78a743d9edd657b",
+          "8cb79d8a1650408a0cb601fdc7f9f38f09130655f35bb7be01fcb72dc8a07b75",
+          "1be586b2c4e27f44dab3ffe947b74b3a0f9c056d58bfee39ef5f6e9ae4158aa5",
+          "2060f6dd655b4eccd1f2aaf66b79e4fd9a72919bafed034c69e112fdc42b6d6f",
+          "a643194ef0d4c6b79b2ff318f45a17f4309a9b08cd1cb791a6e92009b8f3c7f1",
+          "5836bb6866268b7d91857ebbfbfc7d777af43fba3cab28a3bf0c3399798f2de3",
+          "ced515726bf78fc73e53c0f8f9f6507626443b8b5a0ad6f4df5b6bcfb759d81d",
+          "aa75db3eae3c5e51061631479b4fea794a2af1889972ca9881c87ad202654302",
+          "0191f0497ce9cc8d2ed7affb4c9afcb1dfe39d3c8a04116ee0dc76b5e6e9e867",
+          "01ae2867b1da261c58d834dda8d6ffa7d92bae66abac49cfa39fea98b8c7b6cd",
+          "19fd6056e6716e7e1a8fbda3d2f8b0411cfb7bcdf1eae40726f7b0c583090ae2",
+          "290c6e1b969bd44990332b95a77882c5ac60c9bfce8517f9dccb2e0a90e6d905",
+          "5686a61f72f6cdfbcd25b28ece19840e98353a01f3f496d79f43a055ad07a140"
+        ],
+        "Who I am": [
+          "bd055b5fd9f73052d66e4b90a9b4fc2834554d54567415ef2837014c482d05b1",
+          "60708bd442ed3220d0fe723d298eedeffbd3153cebefac1d1932dad301255809",
+          "7d249466df61ad0fd95a9c96d4f87782808cc5bee11497c7876dce9ca7a65d4e"
+        ]
+      },
+      "claude_sections": {
+        "(top)": "5f10ad6ff7a7949b7beae9511124f0150b9725d8fe10e4719b4f9a595e2e992e",
+        "Connections": "93b0500b1860638d00c4a19a8d08e3cb69297542f0f10021f464f5086a303c95",
+        "Continuity: every session picks up where the last one stopped": "16dce4653b132bc8c28340c62b3b0944b596616162c5fd05d013462450ebdfae",
+        "Files": "509e7875cba371562ff8a8efb9de6d600191d5f6b67d8d7eb27a363945b0f0ab",
+        "How to work with me": "b3e2d0ee753549b0b5890b2ff7cf556323c2429baaf3d214034135e9533cbacc",
+        "Placeholders mean \"not known yet\"": "ddc00376a2db16d9d6a7a0627cbffd7513d994c341fcb726f7d2667a44cd8f6e",
+        "Read the source before you state a fact": "6a98dfe38c8951f5fc137a8f528928a72d07163f3c63133b5b3c316d40f6a40d",
+        "Safety rules that never bend": "8c1da656aa67e21994b14af506a6e591fcbd5d651b5f1c522277808f6ec0277f",
+        "Skills: use them, and grow new ones": "22d38f74945ef897c78ceec0f862331e785c6d4f91b701e101379986a8cd9321",
+        "Spreadsheets": "4c7f176a5000e75d2a35aca6e5d9724c98988f90649ebd10136e208b44fe60ec",
+        "Standing behaviors (no command needed)": "f20c34953bcdfb0a1e297c8fa9e172a309d71c6d9ecefed6f19ec2907a7d18cf",
+        "Voice": "1090a2a65a2bc60a73e12e444b6be473a5a7900a809d986ef2b7776a6e1e063b",
+        "What the business does": "0fe76d5375d5f2f407595813fc0045516a0adad7c243cae30dbb66e7d7a6e440",
+        "Where things live": "52a382ea94a78f372b87e541537912d445ec840531d08438ea268d2cf289bd18",
+        "Who I am": "41bf255865472025d5a2c7e9d26943ff5a3a3ea2c886ac80e57938b655f9b16f"
+      },
+      "files": {
+        ".claude/hooks/auto_capture.py": "a400693a42a6c260c129212bd3c7e851a2e25282e01a4d0437c4d0d0a8cc89ce",
+        ".claude/hooks/brain_log.py": "eb847dc94950c5c58fff3acff3dae8c9c55915ba97c565bfedfa12c75bacb634",
+        ".claude/hooks/brand_guard.py": "b5a5fd8ac2801c4a1a3176ed0b05db07a7dbc807afecec2beea856af9469b58d",
+        ".claude/hooks/doctor.py": "382a04a5ff3440c9f896cc9876a7e653039cd35e514d8eb71ae5a039dedb1731",
+        ".claude/hooks/run.sh": "cdc9bc711956da23522eb736e0d0341ebe5a6769901c21dea211c0c7a4bb122e",
+        ".claude/hooks/session_pulse.py": "07b277d51ba40e62ddd233aff65c553510e2bd15e34f4823356e5ed88e3ad0be",
+        ".claude/hooks/vault_recall.py": "b04a77a9544403432f16bcae074a2cde29be3211a89992f226b5d62e3981c5d2",
+        ".claude/settings.json": "29afdaea392aabbfe1eb35f15be959dfad3dd2384745c50f55d33b6bdc37bdd1",
+        ".claude/skills/capture/SKILL.md": "857cd6187ae393ff70149ecba73ab3b292f04c5b3ebb4d1ddb0a98c45dd96fbc",
+        ".claude/skills/handoff/SKILL.md": "21a30aac172e3c3b7cb74ccb1749e364c6b9fda8167f3e20c59d8c48ff2a0c70",
+        ".claude/skills/import-contacts/SKILL.md": "64e6f78e8f0ba389c19ce0460c8e4ed223e772918d4dac7b0fd4c95215e89c51",
+        ".claude/skills/map-files/SKILL.md": "01ef6efc782d7474bc725624a415993138170059ab159da54ecfe85ee889d894",
+        ".claude/skills/meeting-notes/SKILL.md": "dc97848c574dbeb782ee039daf4e4fe98dc81b995b52bdbfa3720346208f1c68",
+        ".claude/skills/meeting-notes/extract_notes.py": "ded98abf281c59073fceb5656571d2ee2d9a9ae55c074f1c8ec648acacd44904",
+        ".claude/skills/new-node/SKILL.md": "997cbcc2a7b4ba233bfd0dc6d88065ac68aceda1a48e75fc1e0776761ac6fe56",
+        ".claude/skills/new-skill/SKILL.md": "23b5d96d4e465252a951ba22f26949b286a6951e1a29f07b5c42d049b0d57a1b",
+        ".claude/skills/onboard/SKILL.md": "79825357bc2bbee6ed0353be2092f210d1967de8faea32a633c7f3fe626e073e",
+        ".claude/skills/pdf/SKILL.md": "5a74e1436bba5d5f95048c5275eda593091c3e0af7e29fc2819402576b0848b4",
+        ".claude/skills/pdf/assets/base.css": "ec6a50b57c89faf808391bb17e156327e09141e13a86315b748a6cd1759237cf",
+        ".claude/skills/pdf/assets/template.html": "d995e5c8d51807c1405d98dcb77488490505c8b7a456a4479b24525d8f052994",
+        ".claude/skills/pdf/render.py": "f86499b5c69e54e82f8fba5f3c278de6a11a0fce9345bcfc2c374353bba0f4c3",
+        ".claude/skills/update-vault/SKILL.md": "8a6860f2e6a30400be0acc1c5f7d20ffde926cbd3759e631ec1943461fdeea20",
+        ".claude/skills/update-vault/known-versions.json": "ad48eff3ca5fc1641fb70e9401c63981a3d62c7214cab4540b31b9de1d32f24e",
+        ".claude/skills/update-vault/match_known.py": "e38dd20cbc6a4431a05225258dedc675606a7bd5b9104907b2b5f0ccc1186c06",
+        ".claude/skills/vault-notes/SKILL.md": "867e0894665d9736f179384212567c9334dc188c2b116191d2c7a746f6fdfb8a",
+        ".gitignore": "184a33d4244df6d67bd3a84ef0a3d8ad824deff72fe8b39a66dfecd231b9e820",
+        ".obsidian/app.json": "593187b751149cf73db031a7682dafea2388ef17712f93f57732b4520f3970eb",
+        ".obsidian/appearance.json": "dcff1175b33d58435e26192dd1dae698d15b4d6f003b73383c2b91feb7843ea2",
+        ".obsidian/core-plugins.json": "c6e674ba2a037e2621a4fa5c294f13b72ed56ad84dba3766b89124648806e2cd",
+        "CLAUDE.md": "486bd7b08d39ecf8a26d773b145a6004610946a54925fd0553b966be9c09bcdf",
+        "HOW-IT-WORKS.md": "a7cabdfb601afd5040b60bff9c63a18b52a0fa74f9f568aafc096a3484c10ef9",
+        "INSTALL.md": "5eef2d1cba98355c76ecf95c1ab8f9d3367c9a3e75aed0a9ab1b267be2444c9a",
+        "LICENSE": "63d2b5f0aa17a0a7e71821e17436bfffe626bd163de3ce48eacbec1310d7dba0",
+        "README.md": "8848d158e76831a45fe98c785ba00bc539c6dc5389587b02ee71656fdc4bd9ab",
+        "brand/README.md": "b94a66a7c257016bd5ab2d663caf2cfd325ab5efca2202e146f8965637e5f6df",
+        "brand/brand.md": "34daff299f1b929531115bf8fda918ffaf9996f8ede7e6907aa8c8261a6ac88a",
+        "brand/logos/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "connections.md": "8ddedc05f1f3bd0b1a8f5323a6a2b66c2d3f1b691d41aa3328694c7d659da32f",
+        "context/about-business.md": "ee7ecc66a202b237d9760634a12b64a701a30aea52eec9b28110d03fc8b41b46",
+        "context/about-me.md": "6188b0f099de32c85b2f93ebc69fd6bdde24706791c166e708b9c2f6e349872b",
+        "context/contacts.md": "1667ab5cbb231340a0f6850904d4c79cfadb0a2be864ea2abbb255d86a44f02b",
+        "context/where-files-live.md": "03357f6bd215234a327383b6ba7ad61f954b423654e7e3613743f33008619853",
+        "context/who-and-what.md": "8d729e5dfc0f2c13ee1b12e4b0b7066ad44ba5f2ea7172dd40346b6d0548e58f",
+        "decisions/log.md": "39a383c35433f402a6ee8f4affe7a139a7506d4db107f0ab9a49bfb3af19059e",
+        "ideas.md": "242064e3da6ea42bd09932c093c0b9ddd05f24a467d43b01e66bd29786bfbe5c",
+        "inbox.md": "e78592ce7a73ba851d520ee7d2b9dd04853d209a979c981a044356427e237fdf",
+        "intake.md": "bf443b1efd5dc28152eb25a2f9fe0c8b7c7fe7a56bc89e0cf24a6ba679bb2c22",
+        "memory/claude/MEMORY.md": "a9aa221d304d52d0a93053c96daf27e6ec817359e51e4814335d68c7004859a2",
+        "memory/taste.md": "7e38f94ef12ef1d2ee6d298035b7438b201c28e3a9a9980afddf898daf851e13",
+        "playbooks/README.md": "d52f56a958da580baa680c08772a3b1b2b04113d1009510eb2144bcd0e3bd697",
+        "playbooks/_TEMPLATE.md": "6a6fc3a23bd1854ff1737312ef70935644f1e663b1d1793f30b2974ccb5fe549",
+        "projects/README.md": "d1fd72af0b39d91185781e5815daf33939e4c339062578e02592b57b23607d87",
+        "projects/_TEMPLATE.md": "d0fd115d42beba64ed286a500942cf7018dd63b91cbee0dd440e847b68912ad9",
+        "references/README.md": "43ba9a5f37d97c6b202dd6040eaa489610c71e1bf5aa46d830992af8d0ce3c37",
+        "references/how-i-decide.md": "3d6280a9bef32d7a5f167e976c9059788f5bf9326436e02d4f375d44fffecbbb",
+        "references/spoken-voice.md": "23aa71eeb6e07d99c76052ee8c261ba0858b03e322a6cf38ee3cef9879d292d6",
+        "references/voice.md": "6ab9585bfa6432e5e78ff0e40ef5cb47f6535ec18fbb2c0c21b07a6e0c3a6e5d",
+        "skills-registry.md": "525dc2a2755d452b2764b7bd2e841e3f146ef49059e4b463bf54ed4bc2a2ace0",
+        "tasks.md": "3824c0817ca4a893d70857f8fbeed8c34819f2f3f97b3add92516d5a37ba96fb"
+      },
+      "house_rule_lines": {
+        "memory/claude/MEMORY.md": [
+          "221d4097f81c14a3b927ab90f677fc23702e0d08d5f0b8395aeb5dd84d77576b"
+        ]
+      },
+      "label": "v2.1.0",
       "seeded_taste_rules": [
         "863eff4e00567aa14feffc43acc8ab63a6c938d76b6d87056f75c37228fcb9a9"
       ]

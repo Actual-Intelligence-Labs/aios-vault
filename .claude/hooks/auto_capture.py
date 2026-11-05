@@ -9,6 +9,9 @@ WHAT IT DOES
   It stays QUIET when your message is clearly an instruction, a question, or
   an answer, because a reminder that fires on every message becomes noise and
   the AI learns to skim past it. See THE QUIET PATH below.
+  It also stays quiet inside helper agents, and on messages the computer
+  wrote rather than the owner (a finished background job, a timer, a
+  message passed on from another agent).
 
 SAFETY
   Never blocks a turn and never fails loudly. If the input is odd or anything
@@ -128,7 +131,11 @@ NOT_TRIGGERS = {"capture"}
 TOO_GENERAL = {"i", "we", "this", "that", "it", "they", "he", "she", "you", "my", "our"}
 
 MACHINE_SOURCES = {"system", "loop_wakeup", "schedule_wakeup", "poll_event"}
-MACHINE_PREFIXES = ("<task-notification", "<local-command", "<system-reminder")
+# Text the computer wrote, not the owner: background-task and timer notices, messages
+# relayed from other agents or chats, and output pasted in by a shell command.
+MACHINE_PREFIXES = ("<task-notification", "<local-command", "<system-reminder", "<agent-message",
+                    "<teammate-message", "<cross-session-message", "<bash-stdout", "<bash-stderr",
+                    "<bash-input", "<user-prompt-submit-hook")
 
 SETUP_FRESH_SECONDS = 3 * 3600   # setup saves each answer as it goes; older than this, it was abandoned
 
@@ -257,6 +264,8 @@ def main():
         return
     if not isinstance(data, dict):
         return
+    if data.get("agent_id") or "/subagents/" in str(data.get("transcript_path") or "").replace("\\", "/"):
+        return   # a helper agent's turn, not the owner's
     prompt = data.get("prompt") or data.get("user_prompt") or data.get("userPrompt") or ""
     if not isinstance(prompt, str):
         return

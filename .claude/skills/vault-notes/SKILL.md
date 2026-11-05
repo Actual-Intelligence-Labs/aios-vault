@@ -137,6 +137,6 @@ Two folders are the exceptions: `brand/logos/` holds the logo images every docum
 
 ## The AI's own memory
 
-`memory/claude/` is where the AI keeps what it learns about working with the owner: one short note per lesson or gotcha. `memory/claude/MEMORY.md` is the index, one line per note or per hub note. Only its first 200 lines or 25 KB ever load, so keep it under 75 lines and 10,000 characters: when one topic reaches about 5 lines, move them into a hub note with one index line, and merge duplicates.
+`memory/claude/` is where the AI keeps what it learns about working with the owner: one short note per lesson or gotcha. `memory/claude/MEMORY.md` is the index, one line per note or per hub note. Only its first 200 lines or 25 KB ever load, so keep it under 75 lines and 10,000 characters. Never move, merge, shorten or reword an index line that states a rule, a default, an always or a never, and give every new memory like that its own index line. When the index grows past its budget, the owner can say "optimize my vault": it groups only lines that just say where to find a note onto hub notes, after the owner has seen each one.
 
 Business facts (who someone is, where a deal stands, what was agreed) belong in the vault's notes, not in memory. A memory note holds the how-to and points at the note that holds the facts.

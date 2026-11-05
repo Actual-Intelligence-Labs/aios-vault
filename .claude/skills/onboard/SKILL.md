@@ -262,7 +262,7 @@ Without Python, do the same by hand: if `.claude/settings.local.json` exists, co
 
 If it stopped because the file is not valid JSON, tell the owner in one line, offer to repair it (keeping every setting in it), and run it again once repaired.
 
-If the script printed "Old index to merge", read that old `MEMORY.md` and add each of its lines under the closest heading of `memory/claude/MEMORY.md`, keeping one line per memory.
+If the script printed "Old index to merge", read that old `MEMORY.md` and add each of its lines under the closest heading of `memory/claude/MEMORY.md`, word for word, keeping one line per memory. Never shorten or reword one to fit.
 
 The setting takes effect after a reload, which the readout asks for last.
 

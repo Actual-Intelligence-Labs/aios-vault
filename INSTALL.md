@@ -9,6 +9,30 @@ Written for someone who has never installed a developer tool. Every step is a li
 - A Mac, a Windows PC, or a Linux machine.
 - A paid Claude plan (Pro, Max, Team or Enterprise) or a Claude Console account. You sign in with it the first time you open Claude Code. You do not need an API key.
 
+## Fastest way
+
+For whoever installs it for someone else, or anyone happy to let Claude do the setup steps.
+
+1. Install [VS Code](https://code.visualstudio.com), the **Claude Code** extension (in VS Code, open the Extensions view, search **Claude Code**, click **Install**), and [Obsidian](https://obsidian.md). On Windows, also install [Git for Windows](https://git-scm.com/downloads/win).
+2. Make an empty folder, for example in Documents, and open it in VS Code: **File**, then **Open Folder**. If VS Code asks whether you trust the authors, click **Yes, I trust the authors**.
+3. Open Claude Code, sign in, and paste one of these two messages.
+
+For a new brain:
+
+```text
+Set up my brain from https://github.com/Actual-Intelligence-Labs/aios-vault . I have Obsidian downloaded.
+```
+
+To update a brain that already exists (in step 2, open that brain's folder instead of an empty one), paste all three sentences:
+
+```text
+Update my vault and how you work from https://github.com/Actual-Intelligence-Labs/aios-vault . Use the update steps in that new download, not my vault's older copy. Then clean up my vault the way the new version says and tell me in plain words what changed.
+```
+
+For a new brain, Claude downloads the vault into the folder, then gives you the last three steps: open the folder in Obsidian (**Open folder as vault**), reload VS Code once, and say "set me up". For an update, Claude shows one list of changes, waits for your yes, cleans up your vault in the same go, and ends with a short report in plain words: how your brain was working before, what changed, and what it means for you.
+
+The rest of this page does the same thing by hand, one click at a time.
+
 There are two ways to run this vault. Most people use **VS Code** ([Part 1](#part-1-the-vs-code-route-recommended)). If you already live in a terminal, [Part 2](#part-2-the-terminal-route) is for you. Both use the same folder and end up in the same place.
 
 ---

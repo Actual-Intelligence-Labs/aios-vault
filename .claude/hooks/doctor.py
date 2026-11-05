@@ -10,8 +10,14 @@ WHAT IT CHECKS
     what it needs
   - Claude's memory: pointed at memory/claude/ inside this vault, and its
     index within budget (75 lines and 10,000 characters)
-  - Settings: the settings files are valid and wire up every helper
+  - Size: whether the vault has grown past a budget that "optimize my vault"
+    tidies (CLAUDE.md, decisions/log.md, tasks.md, inbox.md, skill
+    descriptions)
+  - Settings: the settings files are valid and wire up every helper, each
+    for the right tools
   - Each automatic helper (hook) actually runs, and how long it takes
+  - The slim helper type (.claude/agents/lean-worker.md) is in place
+  - Save points: whether they are on, and whether the last one worked
   - Folder trust: Claude Code is allowed to run this folder's helpers
 
 SAFETY
@@ -24,6 +30,7 @@ SAFETY
 import json
 import os
 import platform
+import re
 import shutil
 import subprocess
 import sys
@@ -31,9 +38,17 @@ import tempfile
 import time
 
 HOOKS = {
-    "SessionStart": ["session_pulse.py"],
+    "SessionStart": ["session_pulse.py", "connector_check.py"],
     "UserPromptSubmit": ["auto_capture.py", "brand_guard.py", "vault_recall.py"],
+    "PreToolUse": ["workflow_check.py", "helper_cost_check.py", "secrets_lock.py"],
     "Stop": ["brain_log.py"],
+    "SessionEnd": ["save_point.py"],
+}
+# The tools each check must see. A tool name that its settings entry does not match means the check never runs.
+MATCHES = {
+    "workflow_check.py": ("Workflow",),
+    "helper_cost_check.py": ("Bash", "Read"),
+    "secrets_lock.py": ("Bash", "Read", "Grep", "mcp__payments__send_payment"),
 }
 PLUGIN = "sheet-geek@sheet-geek"
 OLD_HOOKS = ("auto-capture.sh", "brand-guard.sh")
@@ -267,11 +282,11 @@ def check_memory(root):
         if size > 22500 or lines > 180:
             say("fix", "Claude's memory index is near its load limit (" + str(lines) + " of 200 lines, "
                 + str(size // 1000) + " of 25 KB). Anything past the limit never loads.",
-                "Ask Claude to compact memory/claude/MEMORY.md: one short line per note.")
+                "Say \"optimize my vault\" soon to tidy it.")
         elif chars > 10000 or lines > 75:
             say("fix", "Claude's memory index is over its budget (" + str(lines) + " lines, " + str(chars)
                 + " characters; budget 75 and 10,000).",
-                "Ask Claude to shorten the longest lines or group a topic under one hub note.")
+                "Say \"optimize my vault\" to tidy it.")
 
 
 def check_settings(root):
@@ -282,21 +297,28 @@ def check_settings(root):
             + ", so none of the automatic helpers run.", "Say \"update my vault\" to restore it.")
         return
     hooks = data.get("hooks", {}) if isinstance(data, dict) else {}
-    missing = []
+    missing, narrow = [], []
     for event, scripts in HOOKS.items():
-        cmds = []
+        entries = []
         for group in hooks.get(event, []) if isinstance(hooks, dict) else []:
             for h in group.get("hooks", []) if isinstance(group, dict) else []:
                 if isinstance(h, dict):
-                    cmds.append(str(h.get("command") or ""))
+                    entries.append((str(h.get("command") or ""), str(group.get("matcher") or "")))
         for s in scripts:
-            if not any("run.sh" in c and s in c for c in cmds):
+            mine = [m for c, m in entries if "run.sh" in c and s in c]
+            if not mine:
                 missing.append(s)
+            elif s in MATCHES and not all(any(covers(m, tool) for m in mine) for tool in MATCHES[s]):
+                narrow.append(s)
     if missing:
         say("fix", "The settings do not switch on these helpers: " + ", ".join(missing) + ".",
             "Say \"update my vault\" to restore the settings file.")
+    elif narrow:
+        say("fix", "The settings switch on these helpers for the wrong tools, so they never run: "
+            + ", ".join(narrow) + ".", "Say \"update my vault\" to restore the settings file.")
     else:
-        say("ok", "The settings file is valid and switches on all five automatic helpers.")
+        total = sum(len(v) for v in HOOKS.values())
+        say("ok", "The settings file is valid and switches on all " + str(total) + " automatic helpers.")
     markets = data.get("extraKnownMarketplaces", {}) if isinstance(data, dict) else {}
     enabled = data.get("enabledPlugins", {}) if isinstance(data, dict) else {}
     if not (isinstance(markets, dict) and "sheet-geek" in markets
@@ -310,6 +332,16 @@ def check_settings(root):
         if os.path.exists(os.path.join(root, ".claude", "hooks", name)):
             say("info", "An old helper from the first version is still here and no longer used: .claude/hooks/"
                 + name + ". It is safe to delete.")
+
+
+def covers(matcher, tool):
+    """True when a settings matcher picks this tool name (an empty matcher or * picks every tool)."""
+    if matcher in ("", "*"):
+        return True
+    try:
+        return re.fullmatch(matcher, tool) is not None
+    except re.error:
+        return False
 
 
 def fake_transcript(tmp):
@@ -336,6 +368,15 @@ def check_hooks(root):
     tmp = tempfile.mkdtemp(prefix="vault-check-")
     try:
         transcript = fake_transcript(tmp)
+        big = os.path.join(tmp, "big-file.txt")
+        with open(big, "w", encoding="utf-8") as fh:
+            fh.write("a line of text for the size check\n" * 1000)
+        config = os.path.join(tmp, "config")
+        os.makedirs(config)
+        account = os.path.join(config, ".claude.json")
+        with open(account, "w", encoding="utf-8") as fh:
+            json.dump({"claudeAiMcpEverConnected": []}, fh)
+        unique = "vault-check-" + str(os.getpid()) + "-" + str(int(time.time()))
         cases = [
             ("session_pulse.py", "session-start briefing",
              {"hook_event_name": "SessionStart", "session_id": "vault-check", "source": "startup"}, "context"),
@@ -347,18 +388,42 @@ def check_hooks(root):
              {"hook_event_name": "UserPromptSubmit", "prompt": "who is Zzyzx Quell?"}, "context"),
             ("brain_log.py", "end-of-reply brain log",
              {"hook_event_name": "Stop", "stop_hook_active": False, "transcript_path": transcript}, "block"),
+            ("workflow_check.py", "workflow",
+             {"hook_event_name": "PreToolUse", "session_id": unique, "tool_name": "Workflow",
+              "tool_input": {"script": "await agent('vault check')"}}, "deny"),
+            ("helper_cost_check.py", "cost-saving",
+             {"hook_event_name": "PreToolUse", "session_id": unique, "agent_id": "vault-check", "tool_name": "Read",
+              "tool_input": {"file_path": big}}, "deny"),
+            ("secrets_lock.py", "secrets lock",
+             {"hook_event_name": "PreToolUse", "tool_name": "Bash", "tool_input": {"command": "cat .env"}}, "deny"),
+            ("secrets_lock.py", "money lock",
+             {"hook_event_name": "PreToolUse", "tool_name": "mcp__payments__send_payment", "tool_input": {}}, "ask"),
+            ("connector_check.py", "connector change",
+             {"hook_event_name": "SessionStart", "session_id": unique, "source": "startup"}, "connector"),
+            ("save_point.py", "save point",
+             {"hook_event_name": "SessionEnd", "session_id": unique, "agent_id": "vault-check"}, "quiet"),
         ]
         env = dict(os.environ)
         env["CLAUDE_PROJECT_DIR"] = root
+        env["VAULT_HOOKS_TEMP"] = tmp
+        env["VAULT_HOOKS_STATE_DIR"] = os.path.join(tmp, "state")
         for script, what, payload, expect in cases:
             if not os.path.isfile(os.path.join(root, ".claude", "hooks", script)):
                 say("fix", "The " + what + " helper (" + script + ") is missing.",
                     "Say \"update my vault\" to restore it.")
                 continue
+            run_env = dict(env)
+            if script == "connector_check.py":
+                # a made-up account in a scratch folder: the first run takes a reading, the second sees a change
+                run_env["CLAUDE_CONFIG_DIR"] = config
+                subprocess.run(["sh", run_sh, script], input=json.dumps(payload), capture_output=True,
+                               text=True, timeout=30, env=run_env, cwd=root)
+                with open(account, "w", encoding="utf-8") as fh:
+                    json.dump({"claudeAiMcpEverConnected": ["Vault check connector"]}, fh)
             start = time.time()
             try:
                 out = subprocess.run(["sh", run_sh, script], input=json.dumps(payload), capture_output=True,
-                                     text=True, timeout=30, env=env, cwd=root)
+                                     text=True, timeout=30, env=run_env, cwd=root)
                 took = time.time() - start
                 text = out.stdout.strip()
                 parsed = json.loads(text) if text else None
@@ -369,12 +434,22 @@ def check_hooks(root):
             except Exception:
                 parsed, took, text = None, time.time() - start, "?"
             ok = False
-            if isinstance(parsed, dict):
+            spec = parsed.get("hookSpecificOutput") or {} if isinstance(parsed, dict) else {}
+            if expect == "quiet":
+                ok = out.returncode == 0 and not text
+            elif isinstance(parsed, dict):
                 if expect == "context":
-                    ok = bool((parsed.get("hookSpecificOutput") or {}).get("additionalContext"))
+                    ok = bool(spec.get("additionalContext"))
+                elif expect == "connector":
+                    ok = "Vault check connector" in str(spec.get("additionalContext") or "")
+                elif expect in ("deny", "ask"):
+                    ok = spec.get("permissionDecision") == expect
                 else:
                     ok = parsed.get("decision") == "block"
-            if not text:
+            if expect == "quiet" and not ok:
+                say("fix", "The " + what + " helper (" + script + ") did not finish cleanly.",
+                    "Ask Claude to look into .claude/hooks/" + script + ".")
+            elif not text and expect != "quiet":
                 say("fix", "The " + what + " helper (" + script + ") ran but said nothing.",
                     "Usually this means no usable Python. Check the Python line above.")
             elif not ok:
@@ -411,11 +486,68 @@ def check_trust(root):
         "whether you trust the folder.")
 
 
+def check_agents(root):
+    path = os.path.join(root, ".claude", "agents", "lean-worker.md")
+    if os.path.isfile(path):
+        say("ok", "The slim helper type (lean-worker) is in place, so helpers that only read, check or write "
+                  "files cost far fewer tokens.")
+    else:
+        say("fix", "The slim helper type (.claude/agents/lean-worker.md) is missing, so every helper runs at full "
+                   "size.", "Say \"update my vault\" to restore it.")
+
+
+def check_save_points(root):
+    if not os.path.isfile(os.path.join(root, ".claude", "save-points-on")):
+        say("info", "Save points are off. \"Optimize my vault\" can turn them on: a local save of your notes in "
+                    "git at the end of each session, never uploaded.")
+        return
+    if not os.path.isdir(os.path.join(root, ".git")) and not os.path.isfile(os.path.join(root, ".git")):
+        say("fix", "Save points are on, but this vault folder is not a git repository, so nothing is saved.",
+            "Ask Claude to set up git in this folder, or delete .claude/save-points-on to turn save points off.")
+        return
+    state, _ = load_json(os.path.join(root, ".claude", "state", "save-point.json"))
+    if not isinstance(state, dict) or not state.get("result"):
+        say("ok", "Save points are on. The first one happens when this session ends.")
+        return
+    result, when = str(state.get("result")), str(state.get("time") or "")
+    left = [str(x) for x in state.get("left_out") or []]
+    if result == "saved" or result.startswith("nothing"):
+        say("ok", "Save points are on. Last one (" + when + "): " + result + ".")
+    else:
+        say("fix", "Save points are on, but the last one (" + when + ") was " + result + ".",
+            "Ask Claude to look into it.")
+    if left:
+        say("info", "The last save point left out " + str(len(left)) + " file" + ("s" if len(left) != 1 else "")
+            + " that look like they hold a secret or are over 5 MB: " + ", ".join(left[:5])
+            + (" and more" if len(left) > 5 else "") + ". They are still on disk, just not saved.")
+
+
+def check_sizes(root):
+    sys.dont_write_bytecode = True   # no __pycache__ folder in the vault
+    import session_pulse
+    items = session_pulse.size_items(root, include_memory=False)
+    if items:
+        say("info", "Your vault has grown past its tidy limits: " + "; ".join(items) + ".",
+            "Say \"optimize my vault\" to tidy it.")
+
+
 def check_layout(root):
     for rel, what in (("context/who-and-what.md", "the index of people, companies, projects and tools"),
                       ("context/where-files-live.md", "the map of where your files go")):
         if not os.path.isfile(os.path.join(root, rel)):
             say("fix", rel + " (" + what + ") is missing.", "Say \"update my vault\" to add it.")
+    # Setup or an update fills the file map in. A map still blank in a vault that is set up was skipped.
+    try:
+        with open(os.path.join(root, "CLAUDE.md"), encoding="utf-8", errors="ignore") as fh:
+            set_up = "{{YOUR_NAME}}" not in fh.read(6000)
+        with open(os.path.join(root, "context", "where-files-live.md"), encoding="utf-8", errors="ignore") as fh:
+            text = fh.read()
+            blank_map = "{{YOUR_NAME}}" in text and "**Status:** not mapped yet" in text
+    except OSError:
+        return
+    if set_up and blank_map:
+        say("info", "The map of where your files go (context/where-files-live.md) is still blank.",
+            "Say \"map my files\" to fill it in.")
 
 
 def main():
@@ -424,7 +556,8 @@ def main():
         check_python()
     except Exception as exc:
         say("info", "One check could not finish (" + type(exc).__name__ + ").")
-    for step in (check_sheet_geek, check_memory, check_settings, check_layout, check_hooks, check_trust):
+    for step in (check_sheet_geek, check_memory, check_sizes, check_settings, check_layout, check_agents,
+                 check_hooks, check_save_points, check_trust):
         try:
             step(root)
         except Exception as exc:

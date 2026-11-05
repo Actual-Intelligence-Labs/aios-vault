@@ -20,6 +20,10 @@ WHAT IT DOES
   "where are we with", "remind me about", "what did Sam say"), it tells the
   AI to search the vault before asking you.
 
+  It also stays quiet inside helper agents, and on messages the computer
+  wrote rather than the owner (a finished background job, a timer, a
+  message passed on from another agent).
+
 SAFETY
   Read only. Never writes, never touches the network, never blocks a turn.
   It stays fast on big vaults: it looks at no more than MAX_NOTES notes and
@@ -66,6 +70,9 @@ lily nick norm sterling bob buck carol dot eve hunter jay kit walker turner chas
 PRIORITY_DIRS = ["context", "projects", "references", "decisions", "playbooks", "brand", "memory"]
 SKIP_DIRS = {".git", ".obsidian", ".claude", ".trash", "outputs", "archives",
              "node_modules", "__pycache__", ".venv", "venv"}
+# Top-level folders only: history/ holds old entries the tidy-up moved, word for word.
+# Their pages are dated copies, never the note a name should pull up.
+TOP_SKIP = {"history"}
 
 # Kit and system notes. Their file name and title never act as a name on their
 # own (aliases written in their frontmatter still count).
@@ -132,7 +139,11 @@ LONG_DASHES = chr(0x2014) + chr(0x2013)
 # Messages the computer wrote, not the owner (a finished background task, a
 # scheduled wake-up). Nothing to recall there.
 MACHINE_SOURCES = {"system", "loop_wakeup", "schedule_wakeup", "poll_event"}
-MACHINE_PREFIXES = ("<task-notification", "<local-command", "<system-reminder")
+# Text the computer wrote, not the owner: background-task and timer notices, messages
+# relayed from other agents or chats, and output pasted in by a shell command.
+MACHINE_PREFIXES = ("<task-notification", "<local-command", "<system-reminder", "<agent-message",
+                    "<teammate-message", "<cross-session-message", "<bash-stdout", "<bash-stderr",
+                    "<bash-input", "<user-prompt-submit-hook")
 
 
 def vault_root():
@@ -247,7 +258,7 @@ def live_notes(root):
                 return out
     for n in entries:
         full = os.path.join(root, n)
-        if n in seen_dirs or n in SKIP_DIRS or n.startswith(".") or not os.path.isdir(full):
+        if n in seen_dirs or n in SKIP_DIRS or n in TOP_SKIP or n.startswith(".") or not os.path.isdir(full):
             continue
         if walk(full):
             return out
@@ -613,6 +624,8 @@ def main():
         return
     if not isinstance(data, dict):
         return
+    if data.get("agent_id") or "/subagents/" in str(data.get("transcript_path") or "").replace("\\", "/"):
+        return   # a helper agent's turn, not the owner's
     prompt = data.get("prompt") or data.get("user_prompt") or data.get("userPrompt") or ""
     if not isinstance(prompt, str) or not prompt.strip() or is_machine(data, prompt):
         return

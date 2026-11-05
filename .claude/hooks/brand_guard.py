@@ -10,6 +10,14 @@ WHAT IT DOES
 
   It stays quiet while setup is asking its questions: a writing sample you
   paste in during setup is an answer, not a request to make something.
+  It also stays quiet inside helper agents, and on messages the computer
+  wrote rather than the owner (a finished background job, a timer, a
+  message passed on from another agent).
+  It stays quiet when the message asks to update, upgrade or clean up the
+  vault ("update my vault ... tell me in plain words what changed", or an
+  older paste's "give me the plain report"): that report is about the
+  vault, not a document. A real request to make something in the same
+  message (a proposal, a post, an email) still brings the reminder.
 
 SAFETY
   Never blocks a turn. Never fails loudly. On any error it prints nothing.
@@ -66,8 +74,24 @@ CONTEXT = (
     "run the pdf skill (the Skill tool, or /pdf) and follow it."
 )
 
+# A message that asks to update, upgrade or clean up the vault itself. Its own words
+# ("update", "the plain report") are not a document request. Any other document word
+# in the same message (a proposal, an email, a post) still fires as usual.
+UPKEEP = re.compile(
+    r"(^|[^a-z])(update|upgrade|clean ?up|clean-up|tidy|tidy up|optimi[sz]e|de-?bloat|declutter)"
+    r"\s+(?:[a-z']+\s+){0,2}?(my|the|this|our)\s+(?:obsidian\s+|second\s+)?(vault|brain)([^a-z]|$)"
+    r"|(^|[^a-z])update how you work([^a-z]|$)"
+    r"|(update|optimize)-vault"
+    r"|github\.com/[^\s]*/aios-vault")
+UPKEEP_WORDS = ("update", "upgrade", "report", "summary", "recap")
+LOOSE_FOR_UPKEEP = "|".join(w for w in LOOSE.split("|") if w not in UPKEEP_WORDS)
+
 MACHINE_SOURCES = {"system", "loop_wakeup", "schedule_wakeup", "poll_event"}
-MACHINE_PREFIXES = ("<task-notification", "<local-command", "<system-reminder")
+# Text the computer wrote, not the owner: background-task and timer notices, messages
+# relayed from other agents or chats, and output pasted in by a shell command.
+MACHINE_PREFIXES = ("<task-notification", "<local-command", "<system-reminder", "<agent-message",
+                    "<teammate-message", "<cross-session-message", "<bash-stdout", "<bash-stderr",
+                    "<bash-input", "<user-prompt-submit-hook")
 
 SETUP_FRESH_SECONDS = 3 * 3600   # setup saves each answer as it goes; older than this, it was abandoned
 
@@ -105,13 +129,16 @@ def main():
         return
     if not isinstance(data, dict):
         return
+    if data.get("agent_id") or "/subagents/" in str(data.get("transcript_path") or "").replace("\\", "/"):
+        return   # a helper agent's turn, not the owner's
     prompt = data.get("prompt") or data.get("user_prompt") or data.get("userPrompt") or ""
     if not isinstance(prompt, str) or not prompt.strip():
         return
     if str(data.get("source") or "") in MACHINE_SOURCES or prompt.lstrip().startswith(MACHINE_PREFIXES):
         return
     lower = prompt.lower()
-    fire = has(ARTIFACTS, lower) or (has(LOOSE, lower) and has(ACTIONS, lower))
+    loose = LOOSE_FOR_UPKEEP if UPKEEP.search(lower) else LOOSE
+    fire = has(ARTIFACTS, lower) or (has(loose, lower) and has(ACTIONS, lower))
     if not fire:
         return  # ordinary conversation, say nothing at all
     if setup_in_progress(vault_root()):

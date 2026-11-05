@@ -49,7 +49,7 @@ The rest of this page is the reference you come back to when you are not sure wh
 | `outputs/` | Scratch space for files being built: PDFs, drafts, exports. Its contents are never saved in git. The other place the vault holds real files. | Claude. | Every time something is generated. Safe to empty. |
 | `archives/` | Old notes you no longer need but should not delete. | You, or Claude when you ask. | Whenever a project ends. Move, do not delete. |
 | `.obsidian/` | Obsidian's settings for this vault: which folders to hide, which built-in features are on. | Obsidian, and you. Ask Claude to edit it rather than hand-editing. | Rarely. |
-| `.claude/settings.json` | Wires up the five automatic checks (hooks), names the Sheet Geek plugin and switches it on for this folder (Claude Code still needs it installed once, which setup does on your yes), and stops Claude from starting Claude Code's built-in `schedule` and `loop` skills on its own (you can still type them yourself). | Ships with the kit. | Only if you add or remove a hook. |
+| `.claude/settings.json` | Wires up the ten automatic checks (hooks), names the Sheet Geek plugin and switches it on for this folder (Claude Code still needs it installed once, which setup does on your yes), and stops Claude from starting Claude Code's built-in `schedule` and `loop` skills on its own (you can still type them yourself). | Ships with the kit. | Only if you add or remove a hook. |
 | `.claude/settings.local.json` | Settings for this computer only: where Claude's memory lives (setup writes it), plus any permissions you approved with "don't ask again". Never saved in git. | Claude Code and setup. | Rarely. |
 | `.claude/hooks/run.sh` | The tiny launcher every hook goes through. It finds Python on your computer and runs the named script. If there is no Python, the hooks cannot run, so it never breaks a turn; instead the session pulse prints a VAULT HOOKS DOWN line and Claude offers the install check. Skills that run a Python script ask it which Python to use, so the whole vault uses the same one. | Ships with the kit. | Rarely. |
 | `.claude/hooks/session_pulse.py` | The session pulse: a short briefing for Claude when a session opens. | Ships with the kit. | Rarely. |
@@ -57,12 +57,21 @@ The rest of this page is the reference you come back to when you are not sure wh
 | `.claude/hooks/auto_capture.py` | Auto-capture: spots a loose thought and has Claude file it. | Ships with the kit. | Rarely. |
 | `.claude/hooks/brand_guard.py` | Brand guard: spots a request to make something and has Claude read your brand, taste and voice first. Its word lists are at the top, meant to be edited. | Ships with the kit. You add words. | When you make something new it has never heard of. |
 | `.claude/hooks/brain_log.py` | Brain log: when Claude sends, drafts or saves something and no note was updated, it has Claude log it. Its lists of email, calendar and storage tool names are at the top, meant to be edited. | Ships with the kit. You add tools. | When you connect a tool it does not know. |
-| `.claude/hooks/doctor.py` | The checkup. Not automatic: it runs when setup starts, or when you ask "is everything working?". Reports in plain words on Python, Sheet Geek, the memory location, the settings file, each hook, and folder trust. | Ships with the kit. | Rarely. |
+| `.claude/hooks/doctor.py` | The checkup. Not automatic: it runs when setup starts, or when you ask "is everything working?". Reports in plain words on Python, Sheet Geek, the memory location, the settings file, each hook, the slim helper type, save points, any file past its size limit, and folder trust. | Ships with the kit. | Rarely. |
+| `.claude/hooks/connector_check.py` | Connector check: one line when a session opens, if your connected apps, plugins or tool servers changed since last time. | Ships with the kit. | Rarely. |
+| `.claude/hooks/workflow_check.py` | Workflow check: sends a workflow back once when it starts helpers without saying which kind to use. | Ships with the kit. | Rarely. |
+| `.claude/hooks/helper_cost_check.py` | Helper cost check: sends a helper's costly step back once, with the cheaper way. Never checks your own chat. | Ships with the kit. | Rarely. |
+| `.claude/hooks/secrets_lock.py` | Secrets lock: stops a command or file read that would show a saved password, key or token, and asks you before any connected tool that moves money. | Ships with the kit. | Rarely. |
+| `.claude/hooks/save_point.py` | Save points: when you turn them on, one local git save at the end of each session. Never pushes. | Ships with the kit. | Rarely. |
+| `.claude/agents/lean-worker.md` | The slim helper type. Helpers Claude starts as `lean-worker` get basic tools only, so they cost far less. | Ships with the kit. | Rarely. |
+| `.claude/state/`, `.claude/save-points-on`, `.claude/optimize-state.json`, `.claude/optimize-keep.json`, `.claude/optimize-offer-off` | Small files the checks and the tidy-up keep for themselves: fingerprints of your connected apps, whether save points are on, the vault's state after the last tidy-up, entries you asked to keep, and whether you said no to the first cleanup. No secrets, no note text. | The checks and the tidy-up. | Now and then. |
 | `.claude/skills/*/SKILL.md` | One folder per skill. The instructions Claude follows when that skill runs. | Ships with the kit, plus anything `/new-skill` writes. | When a capability is added or improved. |
 | `.claude/skills/pdf/render.py` | Turns a designed web page into a real PDF by running a browser with no window open (Chrome, Chromium, Edge, or Brave). | Ships with the kit. | Rarely. |
 | `.claude/skills/pdf/assets/` | The stylesheet and HTML template every PDF is built from. Your colors and fonts are written into each document, not into these files. | Ships with the kit. Edit to change how PDFs look. | When you want a different document design. |
 | `.claude/skills/meeting-notes/extract_notes.py` | Pulls the readable text out of a meeting notes document. | Ships with the kit. | Rarely. |
-| `.claude/skills/update-vault/match_known.py`, `known-versions.json` | The update's read-only checker, and fingerprints of earlier versions of this kit, so an update can tell a file you never touched from one you changed. A fingerprint holds no text. | Ships with the kit. | With each new version. |
+| `.claude/skills/update-vault/match_known.py`, `known-versions.json`, `copy_files.py` | The update's read-only checker, and fingerprints of earlier versions of this kit, so an update can tell a file you never touched from one you changed. A fingerprint holds no text. After your yes, `copy_files.py` does the update's copies in one go: it saves the old copies first, writes each new file safely, and moves retired files into the backup folder. Of the files it merges, it only does the ones that need no judgment: it adds new lines to `.gitignore` and swaps in a new `CLAUDE.md` or settings file only while yours is still exactly as an earlier version shipped it. One with your own text or settings in it is left for Claude to merge by hand, keeping everything of yours. | Ships with the kit. | With each new version. |
+| `.claude/skills/optimize-vault/scripts/` | The tidy-up's scripts: measure what every chat loads, plan, move old lines, and prove nothing was lost. Each one changes nothing unless it is given `--apply`. | Ships with the kit. | With each new version. |
+| `history/` | Old decision log entries, finished to-dos and old inbox lines, moved here word for word by "optimize my vault", each in a dated file with a link left where it came from. Also the plain reports of each tidy-up, in `history/reports/`. Obsidian shows it. | The tidy-up. | Each time you tidy. |
 
 ---
 
@@ -146,22 +155,26 @@ You do not have to remember to write them. Every skill in this kit links what it
 
 ## What happens in a session
 
-Five small scripts, called **hooks**, run at set moments. Each one looks at your message or at files on your computer and, when it has something to say, puts a short instruction in front of Claude. None of them uses the internet, none runs outside a session you opened, and if one breaks it stays silent rather than breaking your turn. They all need Python, and they all go through `.claude/hooks/run.sh`. When Python is missing, none of them can run, but the session opens with a VAULT HOOKS DOWN line so Claude tells you and offers the install check.
+Ten small scripts, called **hooks**, run at set moments. Each one looks at your message or at files on your computer and, when it has something to say, puts a short instruction in front of Claude. None of them uses the internet, none runs outside a session you opened, and if one breaks it stays silent rather than breaking your turn. They all need Python, and they all go through `.claude/hooks/run.sh`. When Python is missing, none of them can run, but the session opens with a VAULT HOOKS DOWN line so Claude tells you and offers the install check.
 
 ### When a session opens: the session pulse
 
 `session_pulse.py` hands Claude a short briefing. You do not see it. Claude does. It lists:
 
-- notes changed in the last week, newest first (the kit's own guides are left out);
+- notes changed in the last week, newest first (the kit's own guides are left out, and so are the pages a cleanup makes: the history folder and the topic pages that hold grouped memory lines);
 - the latest lines of `inbox.md`, so Claude knows what you said in passing yesterday;
-- the first few open to-dos in `tasks.md`;
+- the first few open to-dos in `tasks.md`. A list cut short says how much it shows ("first 6 of 12"), so Claude never gives you the shown part as the whole count;
 - your other recent Claude Code sessions in this same folder (their titles and your last message in each), so "where were we?" works across windows;
 - a one-line summary of `HANDOFF.md` (title, goal, age), if you left work mid-way. Claude reads the full note only when your message touches that work, and deletes it once that work is picked up;
-- housekeeping: a project note with no index row, a skill with no registry row, Claude's memory index close to its load limit, the memory location not set (or pointing at an old place), Python too old.
+- housekeeping: a project note with no index row, a skill with no registry row, Claude's memory index close to its load limit, the memory location not set (or pointing at an old place), Python too old;
+- one size check line, only when a file has grown past its limit (see [Keeping the vault light](#keeping-the-vault-light-optimize-my-vault)). Claude mentions it once and offers "optimize my vault". It never tidies, moves or rewords anything on its own.
+- one line, after an update that skipped its cleanup (an older copy of the update steps ran, so the vault was updated but never cleaned up): Claude offers the cleanup and its plain report once. The line goes away for good once the cleanup has run, or when you say no (Claude then leaves an empty file, `.claude/optimize-offer-off`, as the record). It never shows on a new vault, or inside helpers.
 
 Claude tidies the housekeeping items in passing and mentions it in one line. Before setup has run, the pulse simply reminds Claude to offer it once. If setup stopped partway, it says how many questions were answered so Claude offers to resume.
 
 The pulse stays quiet after Claude compacts a long chat and inside helper agents, so a long session does not load the same briefing twice.
+
+**Connector check** (`connector_check.py`) runs at the same moment. If a connected app, plugin or tool server was added or removed since your last session, Claude gets one line saying what changed, tells you in one plain sentence, and asks before changing anything. It keeps only fingerprints of those lists in `.claude/state/`, never names or values. It says nothing the first time, inside helpers, or after a compaction.
 
 ### Every time you send a message: three checks
 
@@ -169,9 +182,17 @@ The pulse stays quiet after Claude compacts a long chat and inside helper agents
 
 **Auto-capture** (`auto_capture.py`) asks "is this a loose thought rather than an instruction?" It stays quiet on questions, on slash commands, on thanks and short answers ("yes, the second one"), on messages that open with a verb aimed at Claude ("draft", "fix", "make"), on the phrases a skill listens for ("map my files"), and while setup is asking its questions. Otherwise it has Claude file the thought with the `capture` skill. Starting a message with `inbox:` or `capture:` forces it.
 
-**Brand guard** (`brand_guard.py`) asks "is this a request to make something?" by matching word lists at the top of the file. Some words fire on their own (`one pager`, `proposal`, `deck`). Others fire only next to an action word, so "write me an email" triggers it and "did you see the email from the client" does not. When it fires, Claude reads `brand/brand.md`, `memory/taste.md` and `references/voice.md` before writing a word. It stays quiet while setup is asking its questions, so a writing sample you paste in is not mistaken for a request.
+**Brand guard** (`brand_guard.py`) asks "is this a request to make something?" by matching word lists at the top of the file. Some words fire on their own (`one pager`, `proposal`, `deck`). Others fire only next to an action word, so "write me an email" triggers it and "did you see the email from the client" does not. When it fires, Claude reads `brand/brand.md`, `memory/taste.md` and `references/voice.md` before writing a word. It stays quiet while setup is asking its questions, so a writing sample you paste in is not mistaken for a request. It also stays quiet when you ask it to update, upgrade or clean up the vault: the plain report at the end of that is about your vault, not a document. A real request in the same message ("then write me a proposal") still brings the reminder.
 
-All three stay silent when they have nothing to say. Sheet Geek, once installed, adds a check of its own: name a spreadsheet it has already studied, and Claude gets that sheet's notes.
+All three stay silent when they have nothing to say, inside helper agents, and on messages the computer wrote rather than you. Sheet Geek, once installed, adds a check of its own: name a spreadsheet it has already studied, and Claude gets that sheet's notes.
+
+### Just before Claude uses a tool: three guards
+
+**Workflow check** (`workflow_check.py`). For a big job, Claude can start **helpers**: smaller Claude sessions that each do one part and report back. Each helper normally starts with the full list of skills and connected tools, which costs a lot before it does anything. This vault ships a slim kind, `lean-worker` (in `.claude/agents/`), with basic tools only. A workflow that starts helpers without naming a kind is sent back once, with the fix. Sent again unchanged, it goes through. Helpers that need a skill or a connected app (email, calendar, cloud files, a browser) still use the full kind.
+
+**Helper cost check** (`helper_cost_check.py`) watches helpers only, never your own chat. It sends a helper's step back once, with the cheaper way, when the step would wait more than 4 minutes, read a file over 20 KB whole, or open an image over 1600 pixels. Whatever a helper reads rides along in every later step, so these add up fast. The same step sent again goes through, so a helper never gets stuck.
+
+**Secrets lock** (`secrets_lock.py`) stops a command or a file read that would put a saved password, key or token on the screen: printing a `.env` file, asking the keychain to show a password, printing a secret setting, and the like. Using a key inside a script is fine, and so is checking that one exists without showing it. Any connected tool that would pay, refund, transfer or buy asks you first. It is a seatbelt, not a safe: it catches mistakes, not someone set on getting around it.
 
 ### When Claude finishes a reply: the brain log
 
@@ -182,6 +203,10 @@ All three stay silent when they have nothing to say. Sheet Geek, once installed,
 - for a file, put the link on the note (never the file itself), with the file saved where `context/where-files-live.md` says.
 
 A line in `inbox.md`, `tasks.md`, `ideas.md` or Claude's memory does not count, because the next session looks for facts on the person or company note. A new calendar block with nobody else on it (time you set aside for yourself, like the reminder in example A below) is not held: nothing went out to anyone. The brain log recognizes tools by the names they use: Gmail, Outlook and Microsoft 365, Apple Mail, Google Calendar, Outlook calendar, Google Drive, OneDrive and SharePoint, Dropbox and Box are on its lists, a tool whose name pairs an action with a thing ("reply" with "mail", "upload" with "file") is caught too, and so is a file Claude saves into a cloud-synced folder on this computer, iCloud Drive included. Chat messages (Slack, Teams chat, texts) are left out on purpose. If a mail, calendar or storage tool of yours is still missed, say "add it to the brain log lists".
+
+### When a session ends: save points
+
+`save_point.py` is off until you turn it on (create an empty file at `.claude/save-points-on`, or say yes when "optimize my vault" offers it). Then, when a session ends, it makes one local git save of what changed, so any day can be undone. It never pushes anything anywhere. It needs the vault folder to be its own git repository. It skips the save while another git job is running, when you have changes staged by hand, or when nothing changed, and it leaves out files that look like they hold a secret and files over 5 MB.
 
 ### Worked example A: you mumble something
 
@@ -268,7 +293,7 @@ Claude Code has a built-in memory: as it works, it writes short notes about how 
 
 Normally that memory sits in a hidden folder in your home directory. Setup moves it into this vault, at `memory/claude/`, by writing one setting into `.claude/settings.local.json` (a settings file for this computer only, never shared). That is why setup asks you to reload once. From then on you can read, link and correct Claude's memory in Obsidian like any other note.
 
-- `memory/claude/MEMORY.md` is the index: one line per memory note, or one line per hub note (a note that lists several memories on one topic). Its budget is 75 lines and 10,000 characters, and only the first 200 lines or 25 KB ever load, so Claude keeps it short and moves detail into the notes. The session pulse warns when it goes over and names the longest lines.
+- `memory/claude/MEMORY.md` is the index: one line per memory note, or one line per hub note (a note that lists several memories on one topic). Its budget is 75 lines and 10,000 characters, and only the first 200 lines or 25 KB ever load, so Claude keeps it short and moves detail into the notes. When it goes over, the session pulse adds a size check line and Claude offers "optimize my vault". A line is never shortened or reworded to fit.
 - Facts about your business (who someone is, a status, a price, a date) belong in the notes, not in memory. Memory holds how-to-work lessons and points to the note for the facts.
 - Preferences about output (too long, wrong tone, never do that again) go in `memory/taste.md`, which every produced document reads.
 - If you move the vault, the setting still points at the old place. The session pulse notices, and Claude can fix it in one step.
@@ -305,7 +330,8 @@ A **skill** is a set of instructions Claude loads when a task matches it. You ne
 | `/map-files` | Learns how you organize your files (look only), writes `context/where-files-live.md`, and asks only about the gaps. Setup runs it. | "map my files" |
 | `/import-contacts` | A one-time pass through your recent email, once email is connected, that suggests people and companies for the index. Adds only the ones you say yes to. | "import my contacts" |
 | `/handoff` | Writes `HANDOFF.md` when you stop mid-task, so the next session picks up exactly where you left off. | "hand this off" |
-| `/update-vault` | Brings an older copy of this vault up to date: new hooks, skills and rules in, your notes, contacts and memory untouched, every change shown before it is made. | "update my vault" |
+| `/update-vault` | Brings an older copy of this vault up to date: new hooks, skills and rules in, your notes, contacts and memory untouched, every change shown before it is made. Tidies the vault in the same run, with the same list and the same yes, and ends with a plain report. | "update my vault" |
+| `/optimize-vault` | Makes the vault lighter, so every chat loads less: one save point, one plan, old lines moved word for word into `history/`, then proof that nothing was lost and a plain report. | "optimize my vault" |
 | Sheet Geek (plugin) | Reads a spreadsheet with code, asks you only what the data cannot answer, and saves what it learned inside the file. Every spreadsheet you share or ask about goes to it. | "give this spreadsheet a brain" |
 
 The full list, including any skill you add later and whether each one runs code, lives in `skills-registry.md`.
@@ -335,19 +361,51 @@ The full list, including any skill you add later and whether each one runs code,
 
 ---
 
+## Keeping the vault light: optimize my vault
+
+Every chat starts by reading the same few things: `CLAUDE.md`, Claude's memory index, a one-line description of every skill, and the session briefing. The more those hold, the slower each chat starts and the more of your plan's limit each one uses. A few files also grow forever: `decisions/log.md`, `tasks.md` and `inbox.md`.
+
+Say "optimize my vault" (the `optimize-vault` skill) and Claude:
+
+1. makes a save point: a local git commit if the vault is its own git repository, or else one packed file inside the vault, in `archives/save-points/` (it never writes beside the vault, and it asks first if that file would be big);
+2. measures what every chat loads, in characters (about 3,000 make a page);
+3. shows you one plan, with before and after numbers, and asks only real questions;
+4. on your yes, moves old decision log entries, finished to-dos and old inbox lines word for word into dated files in `history/`, with a link left where they were;
+5. proves no line was lost, and writes a short report in plain words, saved in `history/reports/` and linked from your decision log.
+
+**Your rules are never removed or reworded.** Claude's memory index is only touched when it is over its size limit, and then only lines that just say where to find a note get grouped onto one page. Every rule line, and every line that says always, never or what Claude does by default, stays word for word. Every memory note stays reachable within two links. When `CLAUDE.md` is over its limit, Claude lists the lines a memory note repeats word for word, and a line goes only when you name it. Rewording even one rule line changed the advice Claude gave, which is why this is a hard rule and not a judgment call.
+
+The limits it works to:
+
+| What | Limit |
+| --- | --- |
+| Claude's memory index | 75 lines and 10,000 characters |
+| `CLAUDE.md` | a warning over 18,000 characters |
+| `decisions/log.md` | 40,000 characters, or entries older than 90 days |
+| `tasks.md` | 20 finished to-dos |
+| `inbox.md` | 100 lines |
+| Each skill description | 300 to 500 characters (a warning over 600) |
+
+Every changed file is copied first into `archives/optimize-DATE-TIME/`. To undo one, copy it back from there, or ask Claude to. A second run right after the first changes nothing. Run it again when the session briefing says a file has grown past its limit. It never runs on its own.
+
+---
+
 ## Upgrading from an older copy
 
-Open the vault in Claude Code and say "update my vault". The `update-vault` skill:
+Open the vault in Claude Code and paste the update message from the README ("Update my vault and how you work from https://github.com/Actual-Intelligence-Labs/aios-vault . Use the update steps in that new download, not my vault's older copy. Then clean up my vault the way the new version says and tell me in plain words what changed."). One step does both jobs. Its second sentence matters on an older vault: it tells Claude to use the new update steps, which also clean up, instead of the vault's older copy. The `update-vault` skill:
 
+- downloads the new version into a temporary folder outside your vault, never a `git pull` into it;
 - brings in the new hooks, skills and rules;
 - never touches your notes, your contacts, Claude's memory, or any hook or skill you added yourself;
 - swaps in the new starter notes only where you never touched the old ones;
 - keeps everything you filled into `CLAUDE.md`;
 - answers each new setup question from what your vault already knows, and asks you only what it cannot work out;
-- shows you exactly what would change, and changes nothing until you say yes;
-- keeps a copy of every file it replaces, in `archives/`, so nothing is lost.
+- plans the tidy-up from "optimize my vault" at the same time, and puts both in one list, with one save point and one yes;
+- changes nothing until you say yes;
+- keeps a copy of every file it replaces, in `archives/`, so nothing is lost;
+- ends with the same plain report: how your brain was working before, what changed, and what it means for you. Claude shows it exactly as it saved it, with at most a two-sentence fine print under it, and only when something truly needs you.
 
-A copy made before that skill existed does not know the phrase. The first time, paste the longer message from the README's "Already using the old version?" section instead. It asks Claude to download the new version into a temporary folder outside your vault, read the update steps there, and follow them as your instructions, with the same change list and the same wait for your yes.
+A copy made before that skill existed does not know the phrase. The first time, paste the longer message from the README's "Already using the old version?" section instead. It asks Claude to download the new version into a temporary folder outside your vault, read the update steps there, and follow them as your instructions, with the same change list, the same tidy-up and the same wait for your yes.
 
 ---
 
@@ -359,12 +417,12 @@ Six rules. Each one exists for a specific reason.
 
 **Anything outward-facing or irreversible stays a draft until you fire it.** Sending, pushing, deploying, publishing, and paying are things you do, not things it does. It writes the email and shows you. You press send. Those actions cannot be taken back, and a confident mistake is still a mistake.
 
-**It never touches money or credentials.** No account numbers, no card details, no passwords, no API keys, in either direction. It will not move money and it will not repeat a secret back to you. There is no version of this system where that capability is worth the risk.
+**It never touches money or credentials.** No account numbers, no card details, no passwords, no API keys, in either direction. It will not move money and it will not repeat a secret back to you. It will not open a saved key or password even to test it: a script may use one, but Claude never sees it. The secrets lock backs this up, and any connected tool that would move money asks you first. There is no version of this system where that capability is worth the risk.
 
 **Nothing runs on a schedule.** No background jobs, no timers, no always-on agent. Work happens inside a session you opened and stops when you close it. Helpers that live inside that session are fine (the hooks, and any helper agents Claude starts for a task), because they end with it. An always-on agent is an always-on attack surface, and you cannot supervise something that runs while you sleep.
 
 **Nothing is reachable from another machine.** No remote access, no tunnels, no open ports. If a tool ever needs to listen for connections, it listens on `127.0.0.1`, which means this computer only.
 
-**Checks beat reminders.** When a rule has to hold every time, the vault uses a small check that always runs (a hook or a script) instead of a note asking Claude to remember. That is why the five hooks exist: they make the important habits happen even on a busy day.
+**Checks beat reminders.** When a rule has to hold every time, the vault uses a small check that always runs (a hook or a script) instead of a note asking Claude to remember. That is why the hooks exist: they make the important habits happen even on a busy day.
 
 If a task seems to want a scheduler, a watcher, or an always-on service, the right move is to say so and let you decide. Not to quietly stand one up.

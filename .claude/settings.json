@@ -24,6 +24,11 @@
             "command": "sh \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/run.sh\" session_pulse.py",
             "timeout": 10,
             "statusMessage": "Catching up on your vault"
+          },
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/run.sh\" connector_check.py",
+            "timeout": 10
           }
         ]
       }
@@ -52,6 +57,38 @@
         ]
       }
     ],
+    "PreToolUse": [
+      {
+        "matcher": "Workflow",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/run.sh\" workflow_check.py",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/run.sh\" helper_cost_check.py",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Read|Grep|mcp__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/run.sh\" secrets_lock.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [
@@ -60,6 +97,17 @@
             "command": "sh \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/run.sh\" brain_log.py",
             "timeout": 15,
             "statusMessage": "Checking that anything sent got logged"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/run.sh\" save_point.py",
+            "timeout": 30
           }
         ]
       }
